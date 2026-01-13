@@ -20,10 +20,10 @@ struct TabBarCoordinatorView: View {
                 CharacterCoordinatorView()
             }
             Tab(TabItems.episodes.title, systemImage: TabItems.episodes.systemImage) {
-                ContentView()
+                EpisodesCoordinatorView()
             }
             Tab(TabItems.locations.title, systemImage: TabItems.locations.systemImage) {
-                ContentView()
+                LocationsCoordinatorView()
             }
         }
     }
