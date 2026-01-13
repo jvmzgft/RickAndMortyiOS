@@ -38,29 +38,34 @@ struct CharacterListView: View {
     @ViewBuilder
     private func readyView() -> some View {
         List(viewModel.characters) { character in
-            HStack(spacing: 12) {
-                AsyncImage(url: URL(string: character.image)) { phase in
-                    if let image = phase.image {
-                        image
-                            .resizable()
-                            .scaledToFill()
-                    } else if phase.error != nil {
-                        Color.gray.opacity(0.2)
-                    } else {
-                        ProgressView()
+            Button {
+                viewModel.selectCharacter(character)
+            } label: {
+                HStack(spacing: 12) {
+                    AsyncImage(url: URL(string: character.image)) { phase in
+                        if let image = phase.image {
+                            image
+                                .resizable()
+                                .scaledToFill()
+                        } else if phase.error != nil {
+                            Color.gray.opacity(0.2)
+                        } else {
+                            ProgressView()
+                        }
+                    }
+                    .frame(width: 56, height: 56)
+                    .clipShape(RoundedRectangle(cornerRadius: 8, style: .continuous))
+
+                    VStack(alignment: .leading, spacing: 4) {
+                        Text(character.name)
+                            .font(.headline)
+                        Text("\(character.species)")
+                            .font(.subheadline)
+                            .foregroundStyle(.secondary)
                     }
                 }
-                .frame(width: 56, height: 56)
-                .clipShape(RoundedRectangle(cornerRadius: 8, style: .continuous))
-
-                VStack(alignment: .leading, spacing: 4) {
-                    Text(character.name)
-                        .font(.headline)
-                    Text("\(character.status) - \(character.species)")
-                        .font(.subheadline)
-                        .foregroundStyle(.secondary)
-                }
             }
+            .buttonStyle(.plain)
             .padding(.vertical, 4)
         }
         .listStyle(.plain)

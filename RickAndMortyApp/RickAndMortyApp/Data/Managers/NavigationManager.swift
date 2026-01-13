@@ -6,11 +6,12 @@
 //
 
 import SwiftUI
+import Combine
 
 protocol ViewSpec: Hashable {}
 
-class NavigationManager<T: ViewSpec> : Observable {
-    var path = NavigationPath()
+class NavigationManager<T: ViewSpec>: ObservableObject {
+    @Published var path = NavigationPath()
     
     func popToRoot() {
         path = NavigationPath()

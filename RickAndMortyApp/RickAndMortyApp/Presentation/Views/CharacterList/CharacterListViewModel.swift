@@ -8,7 +8,7 @@
 import SwiftUI
 import Combine
 
-class CharacterListViewModel: ViewModel<TabBarCoordinator>, ViewStateUpdatable {
+class CharacterListViewModel: ViewModel<CharacterCoordinatorProtocol>, ViewStateUpdatable {
     
     @Published var state: ViewState = .loading
     @Published private(set) var characters: [Character] = []
@@ -29,5 +29,9 @@ class CharacterListViewModel: ViewModel<TabBarCoordinator>, ViewStateUpdatable {
         } catch {
             await updateViewState(.error)
         }
+    }
+
+    func selectCharacter(_ character: Character) {
+        getCoordinator()?.navigateToDetail(character: character)
     }
 }

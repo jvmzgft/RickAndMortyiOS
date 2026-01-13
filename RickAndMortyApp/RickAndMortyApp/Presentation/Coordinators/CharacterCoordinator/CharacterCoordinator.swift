@@ -6,14 +6,21 @@
 //
 
 import SwiftUI
+import Combine
 
 enum CharacterViewSpec: ViewSpec {
     case list
-    case detail
+    case detail(Character)
 }
 
-class CharacterCoordinator: Coordinator {
+protocol CharacterCoordinatorProtocol: AnyObject {
+    func navigateToDetail(character: Character)
+}
+
+class CharacterCoordinator: Coordinator, CharacterCoordinatorProtocol {
     var myCharacterPath: CharacterPath = NavigationFactory.characterPath
     
-    var viewSpec: CharacterViewSpec = .list
+    func navigateToDetail(character: Character) {
+        myCharacterPath.push(.detail(character))
+    }
 }
