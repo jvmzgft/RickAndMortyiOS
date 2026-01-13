@@ -37,15 +37,30 @@ struct EpisodeListView: View {
 
     @ViewBuilder
     private func readyView() -> some View {
-        List(viewModel.episodes) { episode in
-            VStack(alignment: .leading, spacing: 4) {
-                Text(episode.name)
-                    .font(.headline)
-                Text("\(episode.code) - \(episode.airDate)")
-                    .font(.subheadline)
-                    .foregroundStyle(.secondary)
+        List {
+            ForEach(viewModel.episodes) { episode in
+                VStack(alignment: .leading, spacing: 4) {
+                    Text(episode.name)
+                        .font(.headline)
+                    Text("\(episode.code) - \(episode.airDate)")
+                        .font(.subheadline)
+                        .foregroundStyle(.secondary)
+                }
+                .padding(.vertical, 4)
+                .onAppear {
+                    Task {
+                        await viewModel.loadNextPageIfNeeded(currentItem: episode)
+                    }
+                }
             }
-            .padding(.vertical, 4)
+
+            if viewModel.isLoadingNextPage {
+                HStack {
+                    Spacer()
+                    ProgressView()
+                    Spacer()
+                }
+            }
         }
         .listStyle(.plain)
     }

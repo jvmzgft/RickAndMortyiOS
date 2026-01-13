@@ -37,15 +37,30 @@ struct LocationListView: View {
 
     @ViewBuilder
     private func readyView() -> some View {
-        List(viewModel.locations) { location in
-            VStack(alignment: .leading, spacing: 4) {
-                Text(location.name)
-                    .font(.headline)
-                Text("\(location.type) - \(location.dimension)")
-                    .font(.subheadline)
-                    .foregroundStyle(.secondary)
+        List {
+            ForEach(viewModel.locations) { location in
+                VStack(alignment: .leading, spacing: 4) {
+                    Text(location.name)
+                        .font(.headline)
+                    Text("\(location.type) - \(location.dimension)")
+                        .font(.subheadline)
+                        .foregroundStyle(.secondary)
+                }
+                .padding(.vertical, 4)
+                .onAppear {
+                    Task {
+                        await viewModel.loadNextPageIfNeeded(currentItem: location)
+                    }
+                }
             }
-            .padding(.vertical, 4)
+
+            if viewModel.isLoadingNextPage {
+                HStack {
+                    Spacer()
+                    ProgressView()
+                    Spacer()
+                }
+            }
         }
         .listStyle(.plain)
     }
