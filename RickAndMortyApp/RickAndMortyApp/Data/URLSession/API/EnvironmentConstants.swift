@@ -9,5 +9,5 @@ import Foundation
 
 internal class EnvironmentConstants {
     static let scheme: String = "https"
-    static let baseURL: String = "rickandmortyapi.com/api"
+    static let baseURL: String = "rickandmortyapi.com"
 }

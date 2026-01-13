@@ -24,6 +24,6 @@ struct CharacterCoordinatorView: View {
     
     @ViewBuilder
     private func characterListView() -> some View {
-        Text("List View")
+        CharacterListView(viewModel: CharacterListViewModel(coordinator: coordinator))
     }
 }
