@@ -19,6 +19,10 @@ struct CharacterListView: View {
         .task {
             await viewModel.loadCharacters()
         }
+        .searchable(text: $viewModel.searchText, prompt: "Search character")
+        .onChange(of: viewModel.searchText) { _, newValue in
+            viewModel.updateSearch(newValue)
+        }
     }
     
     @ViewBuilder

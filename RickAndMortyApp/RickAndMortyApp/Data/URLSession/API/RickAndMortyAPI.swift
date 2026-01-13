@@ -8,7 +8,7 @@
 import Foundation
 
 enum RickAndMortyAPI: APIRequest {
-    case characterList(page: Int? = nil)
+    case characterList(page: Int? = nil, name: String? = nil)
     case episodeList(page: Int? = nil)
     case locationList(page: Int? = nil)
 
@@ -24,13 +24,22 @@ enum RickAndMortyAPI: APIRequest {
     }
 
     var queryItems: [URLQueryItem] {
-        let page: Int?
+        var items: [URLQueryItem] = []
+
         switch self {
-        case let .characterList(value), let .episodeList(value), let .locationList(value):
-            page = value
+        case let .characterList(page, name):
+            if let page {
+                items.append(URLQueryItem(name: "page", value: String(page)))
+            }
+            if let name, !name.isEmpty {
+                items.append(URLQueryItem(name: "name", value: name))
+            }
+        case let .episodeList(page), let .locationList(page):
+            if let page {
+                items.append(URLQueryItem(name: "page", value: String(page)))
+            }
         }
 
-        guard let page else { return [] }
-        return [URLQueryItem(name: "page", value: String(page))]
+        return items
     }
 }
