@@ -8,25 +8,37 @@
 import SwiftUI
 
 struct EpisodeDetailsView: View {
-    let episode: Episode
+    @StateObject private var viewModel: EpisodeDetailsViewModel
+
+    init(viewModel: EpisodeDetailsViewModel) {
+        _viewModel = StateObject(wrappedValue: viewModel)
+    }
 
     var body: some View {
         ScrollView {
             VStack(alignment: .leading, spacing: 16) {
                 VStack(alignment: .leading, spacing: 8) {
-                    Text(episode.name)
+                    Text(viewModel.episode.name)
                         .font(.title)
                         .bold()
-                    Text("\(episode.code) - \(episode.airDate)")
+                    Text("\(viewModel.episode.code) - \(viewModel.episode.airDate)")
                         .font(.headline)
                         .foregroundStyle(.secondary)
                 }
 
-                infoRow(title: "Air date", value: episode.airDate)
-                infoRow(title: "Code", value: episode.code)
-                infoRow(title: "URL", value: episode.url)
-                infoRow(title: "Created", value: episode.created)
-                infoRow(title: "Characters", value: "\(episode.characters.count)")
+                infoRow(title: "Air date", value: viewModel.episode.airDate)
+                infoRow(title: "Code", value: viewModel.episode.code)
+                infoRow(title: "URL", value: viewModel.episode.url)
+                infoRow(title: "Created", value: viewModel.episode.created)
+
+                VStack(alignment: .leading, spacing: 8) {
+                    Text("CHARACTERS")
+                        .font(.caption)
+                        .foregroundStyle(.secondary)
+                    FourColumnButtonGrid(items: viewModel.episode.characterIds) { characterId in
+                        viewModel.handleCharacterTap(characterId)
+                    }
+                }
             }
             .padding()
         }

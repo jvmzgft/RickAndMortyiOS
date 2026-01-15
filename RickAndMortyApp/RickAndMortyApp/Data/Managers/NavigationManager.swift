@@ -24,6 +24,11 @@ class NavigationManager<T: ViewSpec>: ObservableObject {
     func pop() {
         path.removeLast()
     }
+    
+    func clearAndPush(_ screen: T) {
+        path = NavigationPath()
+        path.append(screen)
+    }
 }
 
 typealias CharacterPath = NavigationManager<CharacterViewSpec>

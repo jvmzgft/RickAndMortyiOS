@@ -12,7 +12,7 @@ struct CharacterCoordinatorView: View {
     @StateObject var coordinator: CharacterCoordinator
     @StateObject private var path: CharacterPath
     
-    init(coordinator: CharacterCoordinator = CharacterCoordinator()) {
+    init(coordinator: CharacterCoordinator) {
         _coordinator = StateObject(wrappedValue: coordinator)
         _path = StateObject(wrappedValue: coordinator.myCharacterPath)
     }
@@ -24,8 +24,12 @@ struct CharacterCoordinatorView: View {
                     switch spec {
                     case .list:
                         characterListView()
-                    case let .detail(character):
-                        CharacterDetailsView(character: character)
+                    case let .detail(character, id):
+                        if let character {
+                            CharacterDetailsView(viewModel: .init(character: character, coordinator: coordinator))
+                        } else if let id {
+                            CharacterDetailsView(viewModel: .init(id: id, coordinator: coordinator))
+                        }
                     }
                 }
         }

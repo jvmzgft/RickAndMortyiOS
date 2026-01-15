@@ -31,3 +31,14 @@ struct Episode: Decodable, Identifiable, Hashable {
         case created
     }
 }
+
+extension Episode {
+    var characterIds: [String] {
+        characters.compactMap { characterId(from: $0) }
+    }
+    
+    private func characterId(from urlString: String) -> String? {
+        let trimmed = urlString.trimmingCharacters(in: CharacterSet(charactersIn: "/"))
+        return trimmed.split(separator: "/").last.map(String.init)
+    }
+}

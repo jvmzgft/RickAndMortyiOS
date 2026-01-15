@@ -8,9 +8,43 @@
 import SwiftUI
 
 struct CharacterDetailsView: View {
-    let character: Character
+    @StateObject private var viewModel: CharacterDetailsViewModel
+
+    init(viewModel: CharacterDetailsViewModel) {
+        _viewModel = StateObject( wrappedValue: viewModel )
+    }
 
     var body: some View {
+        contentView()
+            .task {
+                await viewModel.loadCharacterIfNeeded()
+            }
+            .navigationTitle("Detail")
+            .navigationBarTitleDisplayMode(.inline)
+            .toolbar(.hidden, for: .tabBar)
+    }
+
+    @ViewBuilder
+    private func contentView() -> some View {
+        switch viewModel.state {
+        case .loading:
+            ProgressView()
+        case .ready:
+            if let character = viewModel.character {
+                detailsView(character: character)
+            } else {
+                Text("No results")
+                    .multilineTextAlignment(.center)
+                    .padding()
+            }
+        case .error:
+            Text("ERROR")
+                .multilineTextAlignment(.center)
+                .padding()
+        }
+    }
+
+    private func detailsView(character: Character) -> some View {
         ScrollView {
             VStack(alignment: .leading, spacing: 16) {
                 CachedAsyncImage(urlString: character.image)
@@ -35,9 +69,6 @@ struct CharacterDetailsView: View {
             }
             .padding()
         }
-        .navigationTitle("Detail")
-        .navigationBarTitleDisplayMode(.inline)
-        .toolbar(.hidden, for: .tabBar)
     }
 
     @ViewBuilder

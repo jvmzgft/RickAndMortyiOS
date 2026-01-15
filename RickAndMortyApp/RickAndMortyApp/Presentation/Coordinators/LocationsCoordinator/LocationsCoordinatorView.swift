@@ -11,7 +11,7 @@ struct LocationsCoordinatorView: View {
     @StateObject var coordinator: LocationsCoordinator
     @StateObject private var path: LocationsPath
 
-    init(coordinator: LocationsCoordinator = LocationsCoordinator()) {
+    init(coordinator: LocationsCoordinator) {
         _coordinator = StateObject(wrappedValue: coordinator)
         _path = StateObject(wrappedValue: coordinator.myCharacterPath)
     }

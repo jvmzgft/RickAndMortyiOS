@@ -11,7 +11,7 @@ struct EpisodesCoordinatorView: View {
     @StateObject var coordinator: EpisodesCoordinator
     @StateObject private var path: EpisodesPath
 
-    init(coordinator: EpisodesCoordinator = EpisodesCoordinator()) {
+    init(coordinator: EpisodesCoordinator) {
         _coordinator = StateObject(wrappedValue: coordinator)
         _path = StateObject(wrappedValue: coordinator.myCharacterPath)
     }
@@ -24,7 +24,7 @@ struct EpisodesCoordinatorView: View {
                     case .list:
                         episodeListView()
                     case let .detail(episode):
-                        EpisodeDetailsView(episode: episode)
+                        EpisodeDetailsView(viewModel: .init(episode: episode, coordinator: coordinator))
                     }
                 }
         }
