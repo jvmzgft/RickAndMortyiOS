@@ -8,7 +8,7 @@
 import SwiftUI
 import Combine
 
-class EpisodeListViewModel: ViewModel<EpisodesCoordinator>, ViewStateUpdatable {
+class EpisodeListViewModel: ViewModel<EpisodesCoordinatorProtocol>, ViewStateUpdatable {
     @Published var state: ViewState = .loading
     @Published private(set) var episodes: [Episode] = []
     @Published private(set) var isLoadingNextPage = false
@@ -52,5 +52,9 @@ class EpisodeListViewModel: ViewModel<EpisodesCoordinator>, ViewStateUpdatable {
         }
 
         isLoadingNextPage = false
+    }
+
+    func selectEpisode(_ episode: Episode) {
+        getCoordinator()?.navigateToDetail(episode: episode)
     }
 }

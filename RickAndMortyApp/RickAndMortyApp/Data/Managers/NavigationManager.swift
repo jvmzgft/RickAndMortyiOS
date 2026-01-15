@@ -27,7 +27,11 @@ class NavigationManager<T: ViewSpec>: ObservableObject {
 }
 
 typealias CharacterPath = NavigationManager<CharacterViewSpec>
+typealias EpisodesPath = NavigationManager<EpisodesViewSpec>
+typealias LocationsPath = NavigationManager<LocationsViewSpec>
 
 struct NavigationFactory {
     static let characterPath: NavigationManager<CharacterViewSpec> = NavigationManager<CharacterViewSpec>()
+    static let episodesPath: NavigationManager<EpisodesViewSpec> = NavigationManager<EpisodesViewSpec>()
+    static let locationsPath: NavigationManager<LocationsViewSpec> = NavigationManager<LocationsViewSpec>()
 }

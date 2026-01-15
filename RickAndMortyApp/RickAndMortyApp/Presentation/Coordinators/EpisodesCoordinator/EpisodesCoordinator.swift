@@ -7,6 +7,19 @@
 
 import SwiftUI
 
-class EpisodesCoordinator: Coordinator {
-    
+enum EpisodesViewSpec: ViewSpec {
+    case list
+    case detail(Episode)
+}
+
+protocol EpisodesCoordinatorProtocol: AnyObject {
+    func navigateToDetail(episode: Episode)
+}
+
+class EpisodesCoordinator: Coordinator, EpisodesCoordinatorProtocol {
+    var myCharacterPath: EpisodesPath = NavigationFactory.episodesPath
+
+    func navigateToDetail(episode: Episode) {
+        myCharacterPath.push(.detail(episode))
+    }
 }

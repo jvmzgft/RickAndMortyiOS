@@ -7,6 +7,19 @@
 
 import SwiftUI
 
-class LocationsCoordinator: Coordinator {
+enum LocationsViewSpec: ViewSpec {
+    case list
+    case detail(Location)
+}
+
+protocol LocationsCoordinatorProtocol: AnyObject {
+    func navigateToDetail(location: Location)
+}
+
+class LocationsCoordinator: Coordinator, LocationsCoordinatorProtocol {
+    var myCharacterPath: LocationsPath = NavigationFactory.locationsPath
     
+    func navigateToDetail(location: Location) {
+        myCharacterPath.push(.detail(location))
+    }
 }

@@ -78,7 +78,11 @@ class CharacterListViewModel: ViewModel<CharacterCoordinatorProtocol>, ViewState
             if reset {
                 characters = []
                 hasNextPage = false
-                await updateViewState(.error)
+                if query == nil {
+                    await updateViewState(.error)
+                } else {
+                    await updateViewState(.ready)
+                }
             } else {
                 hasNextPage = false
             }

@@ -39,13 +39,18 @@ struct LocationListView: View {
     private func readyView() -> some View {
         List {
             ForEach(viewModel.locations) { location in
-                VStack(alignment: .leading, spacing: 4) {
-                    Text(location.name)
-                        .font(.headline)
-                    Text("\(location.type) - \(location.dimension)")
-                        .font(.subheadline)
-                        .foregroundStyle(.secondary)
+                Button {
+                    viewModel.selectLocation(location)
+                } label: {
+                    VStack(alignment: .leading, spacing: 4) {
+                        Text(location.name)
+                            .font(.headline)
+                        Text("\(location.type) - \(location.dimension)")
+                            .font(.subheadline)
+                            .foregroundStyle(.secondary)
+                    }
                 }
+                .buttonStyle(.plain)
                 .padding(.vertical, 4)
                 .onAppear {
                     Task {

@@ -39,13 +39,18 @@ struct EpisodeListView: View {
     private func readyView() -> some View {
         List {
             ForEach(viewModel.episodes) { episode in
-                VStack(alignment: .leading, spacing: 4) {
-                    Text(episode.name)
-                        .font(.headline)
-                    Text("\(episode.code) - \(episode.airDate)")
-                        .font(.subheadline)
-                        .foregroundStyle(.secondary)
+                Button {
+                    viewModel.selectEpisode(episode)
+                } label: {
+                    VStack(alignment: .leading, spacing: 4) {
+                        Text(episode.name)
+                            .font(.headline)
+                        Text("\(episode.code) - \(episode.airDate)")
+                            .font(.subheadline)
+                            .foregroundStyle(.secondary)
+                    }
                 }
+                .buttonStyle(.plain)
                 .padding(.vertical, 4)
                 .onAppear {
                     Task {

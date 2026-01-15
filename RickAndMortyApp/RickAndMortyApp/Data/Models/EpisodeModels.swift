@@ -12,7 +12,7 @@ struct EpisodeListResponse: Decodable {
     let results: [Episode]
 }
 
-struct Episode: Decodable, Identifiable {
+struct Episode: Decodable, Identifiable, Hashable {
     let id: Int
     let name: String
     let airDate: String
