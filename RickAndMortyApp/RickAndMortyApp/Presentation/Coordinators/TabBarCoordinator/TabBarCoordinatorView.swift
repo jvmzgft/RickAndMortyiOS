@@ -15,14 +15,14 @@ struct TabBarCoordinatorView: View {
     }
     
     var body: some View {
-        TabView {
-            Tab(TabItems.characters.title, systemImage: TabItems.characters.systemImage) {
+        TabView(selection: $coordinator.selectedTab) {
+            Tab(TabItems.characters.title, systemImage: TabItems.characters.systemImage, value: TabItems.characters) {
                 CharacterCoordinatorView(coordinator: coordinator.characterCoordinator)
             }
-            Tab(TabItems.episodes.title, systemImage: TabItems.episodes.systemImage) {
+            Tab(TabItems.episodes.title, systemImage: TabItems.episodes.systemImage, value: TabItems.episodes) {
                 EpisodesCoordinatorView(coordinator: coordinator.episodesCoordinator)
             }
-            Tab(TabItems.locations.title, systemImage: TabItems.locations.systemImage) {
+            Tab(TabItems.locations.title, systemImage: TabItems.locations.systemImage, value: TabItems.locations) {
                 LocationsCoordinatorView(coordinator: coordinator.locationsCoordinator)
             }
         }

@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import Combine
 
 enum NavigationDestionation: Hashable {
     case characters
@@ -21,7 +22,7 @@ protocol TabBarCoordinatorProtocol: AnyObject {
 }
 
 class TabBarCoordinator: Coordinator, TabBarCoordinatorProtocol {
-    var selectedTab: TabItems = .characters
+    @Published var selectedTab: TabItems = .characters
     lazy var characterCoordinator: CharacterCoordinator = CharacterCoordinator(parentCoordinator: self)
     lazy var episodesCoordinator: EpisodesCoordinator = EpisodesCoordinator(parentCoordinator: self)
     lazy var locationsCoordinator: LocationsCoordinator = LocationsCoordinator(parentCoordinator: self)

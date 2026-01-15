@@ -7,7 +7,7 @@
 
 import Foundation
 
-enum TabItems {
+enum TabItems: Hashable {
     case characters
     case locations
     case episodes
