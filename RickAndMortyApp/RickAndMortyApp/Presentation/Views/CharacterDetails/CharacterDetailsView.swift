@@ -13,17 +13,7 @@ struct CharacterDetailsView: View {
     var body: some View {
         ScrollView {
             VStack(alignment: .leading, spacing: 16) {
-                AsyncImage(url: URL(string: character.image)) { phase in
-                    if let image = phase.image {
-                        image
-                            .resizable()
-                            .scaledToFill()
-                    } else if phase.error != nil {
-                        Color.gray.opacity(0.2)
-                    } else {
-                        ProgressView()
-                    }
-                }
+                CachedAsyncImage(urlString: character.image)
                 .frame(height: 260)
                 .clipped()
                 .clipShape(RoundedRectangle(cornerRadius: 16, style: .continuous))

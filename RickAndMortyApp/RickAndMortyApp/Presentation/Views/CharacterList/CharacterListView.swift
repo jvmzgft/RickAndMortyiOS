@@ -47,17 +47,7 @@ struct CharacterListView: View {
                     viewModel.selectCharacter(character)
                 } label: {
                     HStack(spacing: 12) {
-                        AsyncImage(url: URL(string: character.image)) { phase in
-                            if let image = phase.image {
-                                image
-                                    .resizable()
-                                    .scaledToFill()
-                            } else if phase.error != nil {
-                                Color.gray.opacity(0.2)
-                            } else {
-                                ProgressView()
-                            }
-                        }
+                        CachedAsyncImage(urlString: character.image)
                         .frame(width: 56, height: 56)
                         .clipShape(RoundedRectangle(cornerRadius: 8, style: .continuous))
 

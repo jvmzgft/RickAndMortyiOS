@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		171FE6AA2F18E83F0068C721 /* Kingfisher in Frameworks */ = {isa = PBXBuildFile; productRef = 171FE6A92F18E83F0068C721 /* Kingfisher */; };
 		17CC96712F153BDD0072FE1A /* Lottie in Frameworks */ = {isa = PBXBuildFile; productRef = 17CC96702F153BDD0072FE1A /* Lottie */; };
 /* End PBXBuildFile section */
 
@@ -56,6 +57,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				171FE6AA2F18E83F0068C721 /* Kingfisher in Frameworks */,
 				17CC96712F153BDD0072FE1A /* Lottie in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -126,6 +128,7 @@
 			name = RickAndMortyApp;
 			packageProductDependencies = (
 				17CC96702F153BDD0072FE1A /* Lottie */,
+				171FE6A92F18E83F0068C721 /* Kingfisher */,
 			);
 			productName = RickAndMortyApp;
 			productReference = 17CC95A72F14D4C00072FE1A /* RickAndMortyApp.app */;
@@ -211,6 +214,7 @@
 			minimizedProjectReferenceProxies = 1;
 			packageReferences = (
 				17CC95FE2F1538A70072FE1A /* XCRemoteSwiftPackageReference "lottie-ios" */,
+				171FE6A82F18E8340068C721 /* XCRemoteSwiftPackageReference "Kingfisher" */,
 			);
 			preferredProjectObjectVersion = 77;
 			productRefGroup = 17CC95A82F14D4C00072FE1A /* Products */;
@@ -597,6 +601,14 @@
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
+		171FE6A82F18E8340068C721 /* XCRemoteSwiftPackageReference "Kingfisher" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/onevcat/Kingfisher";
+			requirement = {
+				kind = exactVersion;
+				version = 8.6.2;
+			};
+		};
 		17CC95FE2F1538A70072FE1A /* XCRemoteSwiftPackageReference "lottie-ios" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/airbnb/lottie-ios";
@@ -608,6 +620,11 @@
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
+		171FE6A92F18E83F0068C721 /* Kingfisher */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 171FE6A82F18E8340068C721 /* XCRemoteSwiftPackageReference "Kingfisher" */;
+			productName = Kingfisher;
+		};
 		17CC96702F153BDD0072FE1A /* Lottie */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = 17CC95FE2F1538A70072FE1A /* XCRemoteSwiftPackageReference "lottie-ios" */;
