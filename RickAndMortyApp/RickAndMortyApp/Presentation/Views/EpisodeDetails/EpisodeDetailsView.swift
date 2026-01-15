@@ -40,8 +40,9 @@ struct EpisodeDetailsView: View {
                     }
                 }
             }
-            .padding()
+            .frame(maxWidth: .infinity, alignment: .leading)
         }
+        .padding(.horizontal, 16)
         .navigationTitle("Episode detail")
         .navigationBarTitleDisplayMode(.inline)
         .toolbar(.hidden, for: .tabBar)

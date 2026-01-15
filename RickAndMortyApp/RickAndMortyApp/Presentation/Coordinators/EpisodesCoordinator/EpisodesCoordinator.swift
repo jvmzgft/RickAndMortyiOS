@@ -7,11 +7,6 @@
 
 import SwiftUI
 
-enum EpisodesViewSpec: ViewSpec {
-    case list
-    case detail(Episode)
-}
-
 protocol EpisodesCoordinatorProtocol: AnyObject {
     func navigateToDetail(episode: Episode)
     func navigateToCharacterDetail(id: String)
@@ -19,7 +14,7 @@ protocol EpisodesCoordinatorProtocol: AnyObject {
 }
 
 class EpisodesCoordinator: Coordinator, EpisodesCoordinatorProtocol {
-    var myCharacterPath: EpisodesPath = NavigationFactory.episodesPath
+    var myEpisodesPath: EpisodesPath = NavigationFactory.episodesPath
 
     init(parentCoordinator: Coordinator? = nil) {
         super.init()
@@ -27,13 +22,11 @@ class EpisodesCoordinator: Coordinator, EpisodesCoordinatorProtocol {
     }
 
     func navigateToDetail(episode: Episode) {
-        myCharacterPath.push(.detail(episode))
+        myEpisodesPath.push(.episodeDetail(episode))
     }
     
     func navigateToCharacterDetail(id: String) {
-        if let tabBarCoordinator = parentCoordinator as? TabBarCoordinatorProtocol {
-            tabBarCoordinator.handleDeeplink(destination: .character(id))
-        }
+        myEpisodesPath.push(.characterDetail(nil, id: id))
     }
     
     func handleDeeplink(destination: NavigationDestionation) {

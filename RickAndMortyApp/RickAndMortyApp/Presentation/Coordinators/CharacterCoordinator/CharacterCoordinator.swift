@@ -8,11 +8,6 @@
 import SwiftUI
 import Combine
 
-enum CharacterViewSpec: ViewSpec {
-    case list
-    case detail(Character?, id: String?)
-}
-
 protocol CharacterCoordinatorProtocol: AnyObject {
     func navigateToDetail(character: Character)
     func handleDeeplink(destination: NavigationDestionation)
@@ -27,7 +22,7 @@ class CharacterCoordinator: Coordinator, CharacterCoordinatorProtocol {
     }
     
     func navigateToDetail(character: Character) {
-        myCharacterPath.push(.detail(character, id: nil))
+        myCharacterPath.push(.characterDetail(character, id: nil))
     }
     
     func handleDeeplink(destination: NavigationDestionation) {
@@ -36,7 +31,7 @@ class CharacterCoordinator: Coordinator, CharacterCoordinatorProtocol {
         case .characters:
             myCharacterPath.popToRoot()
         case let .character(id):
-            myCharacterPath.clearAndPush(.detail(nil, id: id))
+            myCharacterPath.clearAndPush(.characterDetail(nil, id: id))
         default: break
         }
         

@@ -7,18 +7,13 @@
 
 import SwiftUI
 
-enum LocationsViewSpec: ViewSpec {
-    case list
-    case detail(Location)
-}
-
 protocol LocationsCoordinatorProtocol: AnyObject {
     func navigateToDetail(location: Location)
     func handleDeeplink(destination: NavigationDestionation)
 }
 
 class LocationsCoordinator: Coordinator, LocationsCoordinatorProtocol {
-    var myCharacterPath: LocationsPath = NavigationFactory.locationsPath
+    var myLocationsPath: LocationsPath = NavigationFactory.locationsPath
 
     init(parentCoordinator: Coordinator? = nil) {
         super.init()
@@ -26,7 +21,7 @@ class LocationsCoordinator: Coordinator, LocationsCoordinatorProtocol {
     }
     
     func navigateToDetail(location: Location) {
-        myCharacterPath.push(.detail(location))
+        myLocationsPath.push(.locationDetail(location))
     }
     
     func handleDeeplink(destination: NavigationDestionation) {

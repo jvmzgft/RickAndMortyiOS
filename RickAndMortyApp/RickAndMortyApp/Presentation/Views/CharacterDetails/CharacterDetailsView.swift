@@ -19,7 +19,7 @@ struct CharacterDetailsView: View {
             .task {
                 await viewModel.loadCharacterIfNeeded()
             }
-            .navigationTitle("Detail")
+            .navigationTitle("Character Detail")
             .navigationBarTitleDisplayMode(.inline)
             .toolbar(.hidden, for: .tabBar)
     }

@@ -23,7 +23,7 @@ class CharacterDetailsViewModel: ViewModel<CharacterCoordinatorProtocol>, ViewSt
         self.state = .ready
     }
 
-    init(id: String, coordinator: Coordinator, apiClient: APIClient = DependencyInjector.getURLSessionAPIClient()) {
+    init(id: String?, coordinator: Coordinator, apiClient: APIClient = DependencyInjector.getURLSessionAPIClient()) {
         self.character = nil
         self.characterId = id
         self.apiClient = apiClient
@@ -31,14 +31,14 @@ class CharacterDetailsViewModel: ViewModel<CharacterCoordinatorProtocol>, ViewSt
     }
 
     func loadCharacterIfNeeded() async {
-        guard character == nil, let characterId else {
+        guard character == nil else {
             await updateViewState(.ready)
             return
         }
 
         await updateViewState(.loading)
 
-        guard let apiClient else {
+        guard let apiClient, let characterId else {
             await updateViewState(.error)
             return
         }

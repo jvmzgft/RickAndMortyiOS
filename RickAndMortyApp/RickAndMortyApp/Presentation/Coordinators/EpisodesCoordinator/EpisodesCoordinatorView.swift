@@ -13,25 +13,15 @@ struct EpisodesCoordinatorView: View {
 
     init(coordinator: EpisodesCoordinator) {
         _coordinator = StateObject(wrappedValue: coordinator)
-        _path = StateObject(wrappedValue: coordinator.myCharacterPath)
+        _path = StateObject(wrappedValue: coordinator.myEpisodesPath)
     }
 
     var body: some View {
         NavigationStack(path: $path.path) {
-            episodeListView()
-                .navigationDestination(for: EpisodesViewSpec.self) { spec in
-                    switch spec {
-                    case .list:
-                        episodeListView()
-                    case let .detail(episode):
-                        EpisodeDetailsView(viewModel: .init(episode: episode, coordinator: coordinator))
-                    }
+            ViewFactory.makeView(for: .episodeList, coordinator: coordinator)
+                .navigationDestination(for: AppViewSpec.self) { spec in
+                    ViewFactory.makeView(for: spec, coordinator: coordinator)
                 }
         }
-    }
-
-    @ViewBuilder
-    private func episodeListView() -> some View {
-        EpisodeListView(viewModel: EpisodeListViewModel(coordinator: coordinator))
     }
 }

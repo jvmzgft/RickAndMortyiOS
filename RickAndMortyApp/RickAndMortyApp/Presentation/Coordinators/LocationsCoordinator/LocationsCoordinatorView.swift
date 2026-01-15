@@ -13,25 +13,15 @@ struct LocationsCoordinatorView: View {
 
     init(coordinator: LocationsCoordinator) {
         _coordinator = StateObject(wrappedValue: coordinator)
-        _path = StateObject(wrappedValue: coordinator.myCharacterPath)
+        _path = StateObject(wrappedValue: coordinator.myLocationsPath)
     }
 
     var body: some View {
         NavigationStack(path: $path.path) {
-            locationListView()
-                .navigationDestination(for: LocationsViewSpec.self) { spec in
-                    switch spec {
-                    case .list:
-                        locationListView()
-                    case let .detail(location):
-                        LocationDetailsView(location: location)
-                    }
+            ViewFactory.makeView(for: .locationList, coordinator: coordinator)
+                .navigationDestination(for: AppViewSpec.self) { spec in
+                    ViewFactory.makeView(for: spec, coordinator: coordinator)
                 }
         }
-    }
-
-    @ViewBuilder
-    private func locationListView() -> some View {
-        LocationListView(viewModel: LocationListViewModel(coordinator: coordinator))
     }
 }

@@ -10,6 +10,15 @@ import Combine
 
 protocol ViewSpec: Hashable {}
 
+enum AppViewSpec: ViewSpec {
+    case characterList
+    case characterDetail(Character?, id: String?)
+    case episodeList
+    case episodeDetail(Episode)
+    case locationList
+    case locationDetail(Location)
+}
+
 class NavigationManager<T: ViewSpec>: ObservableObject {
     @Published var path = NavigationPath()
     
@@ -31,12 +40,12 @@ class NavigationManager<T: ViewSpec>: ObservableObject {
     }
 }
 
-typealias CharacterPath = NavigationManager<CharacterViewSpec>
-typealias EpisodesPath = NavigationManager<EpisodesViewSpec>
-typealias LocationsPath = NavigationManager<LocationsViewSpec>
+typealias CharacterPath = NavigationManager<AppViewSpec>
+typealias EpisodesPath = NavigationManager<AppViewSpec>
+typealias LocationsPath = NavigationManager<AppViewSpec>
 
 struct NavigationFactory {
-    static let characterPath: NavigationManager<CharacterViewSpec> = NavigationManager<CharacterViewSpec>()
-    static let episodesPath: NavigationManager<EpisodesViewSpec> = NavigationManager<EpisodesViewSpec>()
-    static let locationsPath: NavigationManager<LocationsViewSpec> = NavigationManager<LocationsViewSpec>()
+    static let characterPath: NavigationManager<AppViewSpec> = NavigationManager<AppViewSpec>()
+    static let episodesPath: NavigationManager<AppViewSpec> = NavigationManager<AppViewSpec>()
+    static let locationsPath: NavigationManager<AppViewSpec> = NavigationManager<AppViewSpec>()
 }

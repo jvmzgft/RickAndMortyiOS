@@ -19,24 +19,10 @@ struct CharacterCoordinatorView: View {
     
     var body: some View {
         NavigationStack(path: $path.path) {
-            characterListView()
-                .navigationDestination(for: CharacterViewSpec.self) { spec in
-                    switch spec {
-                    case .list:
-                        characterListView()
-                    case let .detail(character, id):
-                        if let character {
-                            CharacterDetailsView(viewModel: .init(character: character, coordinator: coordinator))
-                        } else if let id {
-                            CharacterDetailsView(viewModel: .init(id: id, coordinator: coordinator))
-                        }
-                    }
+            ViewFactory.makeView(for: .characterList, coordinator: coordinator)
+                .navigationDestination(for: AppViewSpec.self) { spec in
+                    ViewFactory.makeView(for: spec, coordinator: coordinator)
                 }
         }
-    }
-    
-    @ViewBuilder
-    private func characterListView() -> some View {
-        CharacterListView(viewModel: CharacterListViewModel(coordinator: coordinator))
     }
 }

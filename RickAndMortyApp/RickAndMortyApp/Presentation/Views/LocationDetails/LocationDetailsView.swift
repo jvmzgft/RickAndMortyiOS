@@ -28,9 +28,10 @@ struct LocationDetailsView: View {
                 infoRow(title: "Created", value: location.created)
                 infoRow(title: "Residents", value: "\(location.residents.count)")
             }
-            .padding()
+            .frame(maxWidth: .infinity, alignment: .leading)
         }
-        .navigationTitle("Detail")
+        .padding(.horizontal, 16)
+        .navigationTitle("Location detail")
         .navigationBarTitleDisplayMode(.inline)
         .toolbar(.hidden, for: .tabBar)
     }
