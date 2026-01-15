@@ -11,8 +11,46 @@ import Foundation
 @MainActor
 final class MockCharacterCoordinator: Coordinator, CharacterCoordinatorProtocol {
     private(set) var navigatedCharacter: Character?
+    private(set) var lastDeeplink: NavigationDestionation?
 
     func navigateToDetail(character: Character) {
         navigatedCharacter = character
+    }
+
+    func handleDeeplink(destination: NavigationDestionation) {
+        lastDeeplink = destination
+    }
+}
+
+@MainActor
+final class MockEpisodesCoordinator: Coordinator, EpisodesCoordinatorProtocol {
+    private(set) var navigatedEpisode: Episode?
+    private(set) var navigatedCharacterId: String?
+    private(set) var lastDeeplink: NavigationDestionation?
+
+    func navigateToDetail(episode: Episode) {
+        navigatedEpisode = episode
+    }
+
+    func navigateToCharacterDetail(id: String) {
+        navigatedCharacterId = id
+    }
+
+    func handleDeeplink(destination: NavigationDestionation) {
+        lastDeeplink = destination
+    }
+}
+
+@MainActor
+final class MockLocationsCoordinator: Coordinator, LocationsCoordinatorProtocol {
+    private(set) var navigatedLocation: Location?
+    private(set) var lastDeeplink: NavigationDestionation?
+
+    func navigateToDetail(location: Location) {
+        navigatedLocation = location
+    }
+
+    func handleDeeplink(destination: NavigationDestionation) {
+        lastDeeplink = destination
     }
 }

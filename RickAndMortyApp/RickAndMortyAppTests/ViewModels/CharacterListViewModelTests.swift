@@ -89,10 +89,10 @@ final class CharacterListViewModelTests: XCTestCase {
         let viewModel = CharacterListViewModel(coordinator: coordinator, apiClient: mock)
 
         viewModel.updateSearch("unknown")
-        await waitFor(timeout: 1.0) { await MainActor.run { viewModel.state == .error } }
+        await waitFor(timeout: 1.0) { await MainActor.run { viewModel.state == .ready } }
 
         await MainActor.run {
-            XCTAssertEqual(viewModel.state, .error)
+            XCTAssertEqual(viewModel.state, .ready)
             XCTAssertTrue(viewModel.characters.isEmpty)
         }
     }

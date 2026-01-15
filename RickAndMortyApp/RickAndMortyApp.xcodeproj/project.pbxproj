@@ -29,6 +29,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		173E46A92F193F9100E5820A /* RickAndMortyApp.xctestplan */ = {isa = PBXFileReference; lastKnownFileType = text; path = RickAndMortyApp.xctestplan; sourceTree = "<group>"; };
 		17CC95A72F14D4C00072FE1A /* RickAndMortyApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = RickAndMortyApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		17CC95B42F14D4CB0072FE1A /* RickAndMortyAppTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = RickAndMortyAppTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		17CC95BE2F14D4CB0072FE1A /* RickAndMortyAppUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = RickAndMortyAppUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -82,6 +83,7 @@
 		17CC959E2F14D4C00072FE1A = {
 			isa = PBXGroup;
 			children = (
+				173E46A92F193F9100E5820A /* RickAndMortyApp.xctestplan */,
 				17CC95A92F14D4C00072FE1A /* RickAndMortyApp */,
 				17CC95B72F14D4CB0072FE1A /* RickAndMortyAppTests */,
 				17CC95C12F14D4CB0072FE1A /* RickAndMortyAppUITests */,

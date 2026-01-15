@@ -18,7 +18,8 @@ final class EpisodeListViewModelTests: XCTestCase {
         )
         mock.enqueue(.success(response))
 
-        let viewModel = EpisodeListViewModel(coordinator: Coordinator(), apiClient: mock)
+        let coordinator = MockEpisodesCoordinator()
+        let viewModel = EpisodeListViewModel(coordinator: coordinator, apiClient: mock)
 
         await viewModel.loadEpisodes()
 
@@ -41,7 +42,8 @@ final class EpisodeListViewModelTests: XCTestCase {
         mock.enqueue(.success(page1))
         mock.enqueue(.success(page2))
 
-        let viewModel = EpisodeListViewModel(coordinator: Coordinator(), apiClient: mock)
+        let coordinator = MockEpisodesCoordinator()
+        let viewModel = EpisodeListViewModel(coordinator: coordinator, apiClient: mock)
 
         await viewModel.loadEpisodes()
         if let last = viewModel.episodes.last {

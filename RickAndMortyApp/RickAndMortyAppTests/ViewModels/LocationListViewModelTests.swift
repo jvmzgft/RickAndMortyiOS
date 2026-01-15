@@ -18,7 +18,8 @@ final class LocationListViewModelTests: XCTestCase {
         )
         mock.enqueue(.success(response))
 
-        let viewModel = LocationListViewModel(coordinator: Coordinator(), apiClient: mock)
+        let coordinator = MockLocationsCoordinator()
+        let viewModel = LocationListViewModel(coordinator: coordinator, apiClient: mock)
 
         await viewModel.loadLocations()
 
@@ -41,7 +42,8 @@ final class LocationListViewModelTests: XCTestCase {
         mock.enqueue(.success(page1))
         mock.enqueue(.success(page2))
 
-        let viewModel = LocationListViewModel(coordinator: Coordinator(), apiClient: mock)
+        let coordinator = MockLocationsCoordinator()
+        let viewModel = LocationListViewModel(coordinator: coordinator, apiClient: mock)
 
         await viewModel.loadLocations()
         if let last = viewModel.locations.last {
