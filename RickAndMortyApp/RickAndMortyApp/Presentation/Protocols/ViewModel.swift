@@ -7,12 +7,7 @@
 
 import Foundation
 
-private protocol ViewModelProperties: AnyObject {
-    associatedtype ViewModelCoordinator
-    func getCoordinator() -> ViewModelCoordinator?
-}
-
-internal class ViewModel<ViewModelCoordinator>: ViewModelProperties {
+internal class ViewModel<ViewModelCoordinator> {
     private weak var coordinator: Coordinator?
     
     internal init(coordinator: Coordinator) {
@@ -21,9 +16,5 @@ internal class ViewModel<ViewModelCoordinator>: ViewModelProperties {
     
     open func getCoordinator() -> ViewModelCoordinator? {
         return coordinator as? ViewModelCoordinator
-    }
-
-    open func getCoordinator<C>(as type: C.Type) -> C? {
-        return coordinator as? C
     }
 }
