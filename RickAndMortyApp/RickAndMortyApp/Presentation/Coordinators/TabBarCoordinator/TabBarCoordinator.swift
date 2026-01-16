@@ -9,11 +9,8 @@ import SwiftUI
 
 enum NavigationDestionation: Hashable {
     case characters
-    case character(String)
     case locations
-    case location(String)
     case episodes
-    case episode(String)
 }
 
 protocol TabBarCoordinatorProtocol: AnyObject {
@@ -38,13 +35,13 @@ class TabBarCoordinator: Coordinator, TabBarCoordinatorProtocol {
     func handleDeeplink(destination: NavigationDestionation) {
         print("LLego al tabBar coordinator, toca redirigir")
         switch destination {
-        case .characters, .character:
+        case .characters:
             selectedTab = .characters
             characterCoordinator?.handleDeeplink(destination: destination)
-        case .locations, .location:
+        case .locations:
             selectedTab = .locations
             locationsCoordinator?.handleDeeplink(destination: destination)
-        case .episodes, .episode:
+        case .episodes:
             selectedTab = .episodes
             episodesCoordinator?.handleDeeplink(destination: destination)
         }

@@ -33,6 +33,10 @@ class EpisodesCoordinator: Coordinator, EpisodesCoordinatorProtocol {
     }
     
     func handleDeeplink(destination: NavigationDestionation) {
-        print("llegue al episodes coordinator")
+        switch destination {
+        case .episodes:
+            myEpisodesPath.popToRoot()
+        default: break
+        }
     }
 }

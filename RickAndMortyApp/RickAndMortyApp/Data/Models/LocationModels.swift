@@ -21,3 +21,9 @@ struct Location: Decodable, Identifiable, Hashable {
     let url: String
     let created: String
 }
+
+extension Location {
+    var residentIds: [String] {
+        residents.compactMap { $0.asLastPathComponent() }
+    }
+}

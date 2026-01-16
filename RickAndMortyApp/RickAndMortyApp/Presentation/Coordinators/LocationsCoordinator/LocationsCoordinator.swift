@@ -33,6 +33,10 @@ class LocationsCoordinator: Coordinator, LocationsCoordinatorProtocol {
     }
     
     func handleDeeplink(destination: NavigationDestionation) {
-        print("llegue al locations coordinator")
+        switch destination {
+        case .locations:
+            myLocationsPath.popToRoot()
+        default: break
+        }
     }
 }

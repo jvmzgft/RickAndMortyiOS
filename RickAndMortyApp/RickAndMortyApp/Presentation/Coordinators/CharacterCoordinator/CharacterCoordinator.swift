@@ -44,14 +44,10 @@ class CharacterCoordinator: Coordinator, CharacterCoordinatorProtocol {
     }
     
     func handleDeeplink(destination: NavigationDestionation) {
-        print("llegue al character Coordinator")
         switch destination {
         case .characters:
             myCharacterPath.popToRoot()
-        case let .character(id):
-            myCharacterPath.clearAndPush(.characterDetail(nil, id: id))
         default: break
         }
-        
     }
 }

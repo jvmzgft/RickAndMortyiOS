@@ -61,6 +61,17 @@ struct LocationDetailsView: View {
                 infoRow(title: "URL", value: location.url)
                 infoRow(title: "Created", value: location.created)
                 infoRow(title: "Residents", value: "\(location.residents.count)")
+
+                if let location = viewModel.location, !location.residentIds.isEmpty {
+                    VStack(alignment: .leading, spacing: 8) {
+                        Text("RESIDENTS")
+                            .font(.caption)
+                            .foregroundStyle(.secondary)
+                        FourColumnButtonGrid(items: location.residentIds) { characterId in
+                            viewModel.handleResidentTap(characterId)
+                        }
+                    }
+                }
             }
             .frame(maxWidth: .infinity, alignment: .leading)
         }

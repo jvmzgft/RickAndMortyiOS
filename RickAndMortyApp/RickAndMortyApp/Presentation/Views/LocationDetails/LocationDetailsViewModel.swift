@@ -52,4 +52,8 @@ class LocationDetailsViewModel: ViewModel<DetailNavigatingProtocol>, ViewStateUp
             await updateViewState(.error)
         }
     }
+
+    func handleResidentTap(_ characterId: String) {
+        getCoordinator()?.navigateToDetail(.characterDetail(nil, id: characterId))
+    }
 }
