@@ -51,4 +51,12 @@ class CharacterDetailsViewModel: ViewModel<CharacterCoordinatorProtocol>, ViewSt
             await updateViewState(.error)
         }
     }
+
+    func handleEpisodeTap(_ episodeId: String) {
+        getCoordinator()?.navigateToEpisodeDetail(id: episodeId)
+    }
+
+    func handleLocationTap(_ locationId: String) {
+        getCoordinator()?.navigateToLocationDetail(id: locationId)
+    }
 }

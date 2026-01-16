@@ -66,6 +66,30 @@ struct CharacterDetailsView: View {
                 infoRow(title: "Origin", value: character.origin.name)
                 infoRow(title: "Current location", value: character.location.name)
                 infoRow(title: "Episodes", value: "\(character.episode.count)")
+
+                if let character = viewModel.character {
+                    if !character.episodeIds.isEmpty {
+                        VStack(alignment: .leading, spacing: 8) {
+                            Text("EPISODES")
+                                .font(.caption)
+                                .foregroundStyle(.secondary)
+                            FourColumnButtonGrid(items: character.episodeIds) { episodeId in
+                                viewModel.handleEpisodeTap(episodeId)
+                            }
+                        }
+                    }
+                    
+                    if !character.locationIds.isEmpty {
+                        VStack(alignment: .leading, spacing: 8) {
+                            Text("LOCATIONS")
+                                .font(.caption)
+                                .foregroundStyle(.secondary)
+                            FourColumnButtonGrid(items: character.locationIds) { locationId in
+                                viewModel.handleLocationTap(locationId)
+                            }
+                        }
+                    }
+                }
             }
             .padding()
         }

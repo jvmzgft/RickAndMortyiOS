@@ -34,6 +34,18 @@ struct Character: Decodable, Identifiable, Hashable {
     let created: String
 }
 
+extension Character {
+    var episodeIds: [String] {
+        episode.compactMap { $0.asLastPathComponent() }
+    }
+    
+    var locationIds: [String] {
+        let urls = [origin.url, location.url].compactMap { $0 }
+        let ids = urls.compactMap { $0.asLastPathComponent() }
+        return Array(Set(ids)).sorted()
+    }
+}
+
 struct CharacterLocation: Decodable, Hashable {
     let name: String
     let url: String

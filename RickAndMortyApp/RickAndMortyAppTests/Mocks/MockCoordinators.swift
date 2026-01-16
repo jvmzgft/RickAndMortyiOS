@@ -11,10 +11,20 @@ import Foundation
 @MainActor
 final class MockCharacterCoordinator: Coordinator, CharacterCoordinatorProtocol {
     private(set) var navigatedCharacter: Character?
+    private(set) var navigatedEpisodeId: String?
+    private(set) var navigatedLocationId: String?
     private(set) var lastDeeplink: NavigationDestionation?
 
     func navigateToDetail(character: Character) {
         navigatedCharacter = character
+    }
+
+    func navigateToEpisodeDetail(id: String) {
+        navigatedEpisodeId = id
+    }
+
+    func navigateToLocationDetail(id: String) {
+        navigatedLocationId = id
     }
 
     func handleDeeplink(destination: NavigationDestionation) {

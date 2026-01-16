@@ -10,6 +10,8 @@ import Combine
 
 protocol CharacterCoordinatorProtocol: AnyObject {
     func navigateToDetail(character: Character)
+    func navigateToEpisodeDetail(id: String)
+    func navigateToLocationDetail(id: String)
     func handleDeeplink(destination: NavigationDestionation)
 }
 
@@ -23,6 +25,14 @@ class CharacterCoordinator: Coordinator, CharacterCoordinatorProtocol {
     
     func navigateToDetail(character: Character) {
         myCharacterPath.push(.characterDetail(character, id: nil))
+    }
+
+    func navigateToEpisodeDetail(id: String) {
+        myCharacterPath.push(.episodeDetail(nil, id: id))
+    }
+
+    func navigateToLocationDetail(id: String) {
+        myCharacterPath.push(.locationDetail(nil, id: id))
     }
     
     func handleDeeplink(destination: NavigationDestionation) {

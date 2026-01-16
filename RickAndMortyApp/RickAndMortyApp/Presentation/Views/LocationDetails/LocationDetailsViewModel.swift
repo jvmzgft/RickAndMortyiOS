@@ -1,5 +1,5 @@
 //
-//  EpisodeDetailsViewModel.swift
+//  LocationDetailsViewModel.swift
 //  RickAndMortyApp
 //
 //  Created by Martinez Montilla, Javier on 15/1/26.
@@ -8,52 +8,47 @@
 import Foundation
 import Combine
 
-class EpisodeDetailsViewModel: ViewModel<EpisodesCoordinatorProtocol>, ViewStateUpdatable {
+class LocationDetailsViewModel: ViewModel<LocationsCoordinatorProtocol>, ViewStateUpdatable {
     @Published var state: ViewState = .loading
-    @Published private(set) var episode: Episode?
+    @Published private(set) var location: Location?
 
     private let apiClient: APIClient?
-    private let episodeId: String?
-    
-    init(episode: Episode, coordinator: Coordinator) {
-        self.episode = episode
-        self.episodeId = nil
+    private let locationId: String?
+
+    init(location: Location, coordinator: Coordinator) {
+        self.location = location
+        self.locationId = nil
         self.apiClient = nil
         super.init(coordinator: coordinator)
         self.state = .ready
     }
 
     init(id: String?, coordinator: Coordinator, apiClient: APIClient = DependencyInjector.getURLSessionAPIClient()) {
-        self.episode = nil
-        self.episodeId = id
+        self.location = nil
+        self.locationId = id
         self.apiClient = apiClient
         super.init(coordinator: coordinator)
     }
 
-    func loadEpisodeIfNeeded() async {
-        guard episode == nil, let episodeId else {
+    func loadLocationIfNeeded() async {
+        guard location == nil else {
             await updateViewState(.ready)
             return
         }
 
         await updateViewState(.loading)
 
-        guard let apiClient else {
+        guard let apiClient, let locationId else {
             await updateViewState(.error)
             return
         }
 
         do {
-            let response: Episode = try await apiClient.send(RickAndMortyAPI.episode(id: episodeId))
-            episode = response
+            let response: Location = try await apiClient.send(RickAndMortyAPI.location(id: locationId))
+            location = response
             await updateViewState(.ready)
         } catch {
             await updateViewState(.error)
         }
     }
-
-    func handleCharacterTap(_ characterId: String) {
-        getCoordinator()?.navigateToCharacterDetail(id: characterId)
-    }
-
 }

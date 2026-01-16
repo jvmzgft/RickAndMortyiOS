@@ -22,7 +22,7 @@ class EpisodesCoordinator: Coordinator, EpisodesCoordinatorProtocol {
     }
 
     func navigateToDetail(episode: Episode) {
-        myEpisodesPath.push(.episodeDetail(episode))
+        myEpisodesPath.push(.episodeDetail(episode, id: nil))
     }
     
     func navigateToCharacterDetail(id: String) {

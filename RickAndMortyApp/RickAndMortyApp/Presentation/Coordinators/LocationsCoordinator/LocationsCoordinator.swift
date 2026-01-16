@@ -21,7 +21,7 @@ class LocationsCoordinator: Coordinator, LocationsCoordinatorProtocol {
     }
     
     func navigateToDetail(location: Location) {
-        myLocationsPath.push(.locationDetail(location))
+        myLocationsPath.push(.locationDetail(location, id: nil))
     }
     
     func handleDeeplink(destination: NavigationDestionation) {

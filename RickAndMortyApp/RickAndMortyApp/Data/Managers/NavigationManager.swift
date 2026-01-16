@@ -14,9 +14,9 @@ enum AppViewSpec: ViewSpec {
     case characterList
     case characterDetail(Character?, id: String?)
     case episodeList
-    case episodeDetail(Episode)
+    case episodeDetail(Episode?, id: String?)
     case locationList
-    case locationDetail(Location)
+    case locationDetail(Location?, id: String?)
 }
 
 class NavigationManager<T: ViewSpec>: ObservableObject {

@@ -32,15 +32,31 @@ internal class DependencyInjector {
         .init(viewModel: .init(coordinator: coordinator))
     }
     
-    static func episodeDetail(episode: Episode, coordinator: Coordinator) -> EpisodeDetailsView {
-        .init(viewModel: .init(episode: episode, coordinator: coordinator))
+    static func episodeDetail(episode: Episode?, id: String?, coordinator: Coordinator) -> EpisodeDetailsView {
+        var vm: EpisodeDetailsViewModel
+        if let episode {
+            vm = .init(episode: episode, coordinator: coordinator)
+        } else if let id {
+            vm = .init(id: id, coordinator: coordinator)
+        } else {
+            vm = .init(id: nil, coordinator: coordinator)
+        }
+        return .init(viewModel: vm)
     }
     
     static func locationList(coordinator: Coordinator) -> LocationListView {
         .init(viewModel: .init(coordinator: coordinator))
     }
     
-    static func locationDetail(location: Location) -> LocationDetailsView {
-        .init(location: location)
+    static func locationDetail(location: Location?, id: String?, coordinator: Coordinator) -> LocationDetailsView {
+        var vm: LocationDetailsViewModel
+        if let location {
+            vm = .init(location: location, coordinator: coordinator)
+        } else if let id {
+            vm = .init(id: id, coordinator: coordinator)
+        } else {
+            vm = .init(id: nil, coordinator: coordinator)
+        }
+        return .init(viewModel: vm)
     }
 }

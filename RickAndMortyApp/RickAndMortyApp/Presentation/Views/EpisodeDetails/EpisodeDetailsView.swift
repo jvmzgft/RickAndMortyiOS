@@ -15,27 +15,57 @@ struct EpisodeDetailsView: View {
     }
 
     var body: some View {
+        contentView()
+            .task {
+                await viewModel.loadEpisodeIfNeeded()
+            }
+            .navigationTitle("Episode detail")
+            .navigationBarTitleDisplayMode(.inline)
+            .toolbar(.hidden, for: .tabBar)
+    }
+
+    @ViewBuilder
+    private func contentView() -> some View {
+        switch viewModel.state {
+        case .loading:
+            ProgressView()
+        case .ready:
+            if let episode = viewModel.episode {
+                detailsView(episode: episode)
+            } else {
+                Text("No results")
+                    .multilineTextAlignment(.center)
+                    .padding()
+            }
+        case .error:
+            Text("ERROR")
+                .multilineTextAlignment(.center)
+                .padding()
+        }
+    }
+
+    private func detailsView(episode: Episode) -> some View {
         ScrollView {
             VStack(alignment: .leading, spacing: 16) {
                 VStack(alignment: .leading, spacing: 8) {
-                    Text(viewModel.episode.name)
+                    Text(episode.name)
                         .font(.title)
                         .bold()
-                    Text("\(viewModel.episode.code) - \(viewModel.episode.airDate)")
+                    Text("\(episode.code) - \(episode.airDate)")
                         .font(.headline)
                         .foregroundStyle(.secondary)
                 }
 
-                infoRow(title: "Air date", value: viewModel.episode.airDate)
-                infoRow(title: "Code", value: viewModel.episode.code)
-                infoRow(title: "URL", value: viewModel.episode.url)
-                infoRow(title: "Created", value: viewModel.episode.created)
+                infoRow(title: "Air date", value: episode.airDate)
+                infoRow(title: "Code", value: episode.code)
+                infoRow(title: "URL", value: episode.url)
+                infoRow(title: "Created", value: episode.created)
 
                 VStack(alignment: .leading, spacing: 8) {
                     Text("CHARACTERS")
                         .font(.caption)
                         .foregroundStyle(.secondary)
-                    FourColumnButtonGrid(items: viewModel.episode.characterIds) { characterId in
+                    FourColumnButtonGrid(items: episode.characterIds) { characterId in
                         viewModel.handleCharacterTap(characterId)
                     }
                 }
@@ -43,9 +73,7 @@ struct EpisodeDetailsView: View {
             .frame(maxWidth: .infinity, alignment: .leading)
         }
         .padding(.horizontal, 16)
-        .navigationTitle("Episode detail")
-        .navigationBarTitleDisplayMode(.inline)
-        .toolbar(.hidden, for: .tabBar)
+        .padding(.vertical, 16)
     }
 
     @ViewBuilder

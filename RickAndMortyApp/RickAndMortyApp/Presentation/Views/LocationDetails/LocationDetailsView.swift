@@ -8,9 +8,43 @@
 import SwiftUI
 
 struct LocationDetailsView: View {
-    let location: Location
+    @StateObject private var viewModel: LocationDetailsViewModel
+
+    init(viewModel: LocationDetailsViewModel) {
+        _viewModel = StateObject(wrappedValue: viewModel)
+    }
 
     var body: some View {
+        contentView()
+            .task {
+                await viewModel.loadLocationIfNeeded()
+            }
+            .navigationTitle("Location detail")
+            .navigationBarTitleDisplayMode(.inline)
+            .toolbar(.hidden, for: .tabBar)
+    }
+
+    @ViewBuilder
+    private func contentView() -> some View {
+        switch viewModel.state {
+        case .loading:
+            ProgressView()
+        case .ready:
+            if let location = viewModel.location {
+                detailsView(location: location)
+            } else {
+                Text("No results")
+                    .multilineTextAlignment(.center)
+                    .padding()
+            }
+        case .error:
+            Text("ERROR")
+                .multilineTextAlignment(.center)
+                .padding()
+        }
+    }
+
+    private func detailsView(location: Location) -> some View {
         ScrollView {
             VStack(alignment: .leading, spacing: 16) {
                 VStack(alignment: .leading, spacing: 8) {
@@ -31,9 +65,7 @@ struct LocationDetailsView: View {
             .frame(maxWidth: .infinity, alignment: .leading)
         }
         .padding(.horizontal, 16)
-        .navigationTitle("Location detail")
-        .navigationBarTitleDisplayMode(.inline)
-        .toolbar(.hidden, for: .tabBar)
+        .padding(.vertical, 16)
     }
 
     private func displayText(_ value: String) -> String {

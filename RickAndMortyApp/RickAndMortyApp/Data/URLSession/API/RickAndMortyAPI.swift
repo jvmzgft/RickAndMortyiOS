@@ -11,7 +11,9 @@ enum RickAndMortyAPI: APIRequest {
     case characterList(page: Int? = nil, name: String? = nil)
     case character(id: String)
     case episodeList(page: Int? = nil)
+    case episode(id: String)
     case locationList(page: Int? = nil)
+    case location(id: String)
 
     var path: String {
         switch self {
@@ -21,8 +23,12 @@ enum RickAndMortyAPI: APIRequest {
             return "/api/character/\(id)"
         case .episodeList:
             return "/api/episode"
+        case let .episode(id):
+            return "/api/episode/\(id)"
         case .locationList:
             return "/api/location"
+        case let .location(id):
+            return "/api/location/\(id)"
         }
     }
 
@@ -37,7 +43,7 @@ enum RickAndMortyAPI: APIRequest {
             if let name, !name.isEmpty {
                 items.append(URLQueryItem(name: "name", value: name))
             }
-        case .character:
+        case .character, .episode, .location:
             break
         case let .episodeList(page), let .locationList(page):
             if let page {

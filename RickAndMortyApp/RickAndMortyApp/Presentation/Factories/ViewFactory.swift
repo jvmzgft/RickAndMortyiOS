@@ -17,12 +17,12 @@ struct ViewFactory {
             DependencyInjector.characterDetailView(character: character, id: id, coordinator: coordinator)
         case .episodeList:
             DependencyInjector.episodeList(coordinator: coordinator)
-        case let .episodeDetail(episode):
-            DependencyInjector.episodeDetail(episode: episode, coordinator: coordinator)
+        case let .episodeDetail(episode, id):
+            DependencyInjector.episodeDetail(episode: episode, id: id, coordinator: coordinator)
         case .locationList:
             DependencyInjector.locationList(coordinator: coordinator)
-        case let .locationDetail(location):
-            DependencyInjector.locationDetail(location: location)
+        case let .locationDetail(location, id):
+            DependencyInjector.locationDetail(location: location, id: id, coordinator: coordinator)
         }
     }
 }
