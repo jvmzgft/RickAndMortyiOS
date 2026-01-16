@@ -9,7 +9,7 @@ import Foundation
 import Observation
 
 @Observable
-class EpisodeDetailsViewModel: ViewModel<EpisodesCoordinatorProtocol>, ViewStateUpdatable {
+class EpisodeDetailsViewModel: ViewModel<DetailNavigatingProtocol>, ViewStateUpdatable {
     var state: ViewState = .loading
     private(set) var episode: Episode?
 
@@ -54,7 +54,7 @@ class EpisodeDetailsViewModel: ViewModel<EpisodesCoordinatorProtocol>, ViewState
     }
 
     func handleCharacterTap(_ characterId: String) {
-        getCoordinator()?.navigateToCharacterDetail(id: characterId)
+        getCoordinator()?.navigateToDetail(.characterDetail(nil, id: characterId))
     }
 
 }

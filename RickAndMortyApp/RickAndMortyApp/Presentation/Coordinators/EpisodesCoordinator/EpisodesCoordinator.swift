@@ -7,9 +7,8 @@
 
 import SwiftUI
 
-protocol EpisodesCoordinatorProtocol: AnyObject {
+protocol EpisodesCoordinatorProtocol: AnyObject, DetailNavigatingProtocol {
     func navigateToDetail(episode: Episode)
-    func navigateToCharacterDetail(id: String)
     func handleDeeplink(destination: NavigationDestionation)
 }
 
@@ -24,9 +23,13 @@ class EpisodesCoordinator: Coordinator, EpisodesCoordinatorProtocol {
     func navigateToDetail(episode: Episode) {
         myEpisodesPath.push(.episodeDetail(episode, id: nil))
     }
-    
-    func navigateToCharacterDetail(id: String) {
-        myEpisodesPath.push(.characterDetail(nil, id: id))
+
+    func navigateToDetail(_ spec: AppViewSpec) {
+        switch spec {
+        case .characterDetail, .episodeDetail, .locationDetail:
+            myEpisodesPath.push(spec)
+        default: break
+        }
     }
     
     func handleDeeplink(destination: NavigationDestionation) {

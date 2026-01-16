@@ -9,7 +9,7 @@ import SwiftUI
 import Observation
 
 @Observable
-class EpisodeListViewModel: ViewModel<EpisodesCoordinatorProtocol>, ViewStateUpdatable {
+class EpisodeListViewModel: ViewModel<DetailNavigatingProtocol>, ViewStateUpdatable {
     var state: ViewState = .loading
     private(set) var episodes: [Episode] = []
     private(set) var isLoadingNextPage = false
@@ -56,6 +56,6 @@ class EpisodeListViewModel: ViewModel<EpisodesCoordinatorProtocol>, ViewStateUpd
     }
 
     func selectEpisode(_ episode: Episode) {
-        getCoordinator()?.navigateToDetail(episode: episode)
+        getCoordinator()?.navigateToDetail(.episodeDetail(episode, id: nil))
     }
 }

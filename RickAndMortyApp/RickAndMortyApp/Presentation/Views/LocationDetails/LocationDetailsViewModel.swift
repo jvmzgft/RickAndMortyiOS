@@ -9,7 +9,7 @@ import Foundation
 import Observation
 
 @Observable
-class LocationDetailsViewModel: ViewModel<LocationsCoordinatorProtocol>, ViewStateUpdatable {
+class LocationDetailsViewModel: ViewModel<DetailNavigatingProtocol>, ViewStateUpdatable {
     var state: ViewState = .loading
     private(set) var location: Location?
 

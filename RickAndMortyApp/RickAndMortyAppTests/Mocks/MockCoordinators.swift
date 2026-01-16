@@ -14,6 +14,7 @@ final class MockCharacterCoordinator: Coordinator, CharacterCoordinatorProtocol 
     private(set) var navigatedEpisodeId: String?
     private(set) var navigatedLocationId: String?
     private(set) var lastDeeplink: NavigationDestionation?
+    private(set) var lastDetailSpec: AppViewSpec?
 
     func navigateToDetail(character: Character) {
         navigatedCharacter = character
@@ -27,6 +28,10 @@ final class MockCharacterCoordinator: Coordinator, CharacterCoordinatorProtocol 
         navigatedLocationId = id
     }
 
+    func navigateToDetail(_ spec: AppViewSpec) {
+        lastDetailSpec = spec
+    }
+
     func handleDeeplink(destination: NavigationDestionation) {
         lastDeeplink = destination
     }
@@ -37,13 +42,14 @@ final class MockEpisodesCoordinator: Coordinator, EpisodesCoordinatorProtocol {
     private(set) var navigatedEpisode: Episode?
     private(set) var navigatedCharacterId: String?
     private(set) var lastDeeplink: NavigationDestionation?
+    private(set) var lastDetailSpec: AppViewSpec?
 
     func navigateToDetail(episode: Episode) {
         navigatedEpisode = episode
     }
 
-    func navigateToCharacterDetail(id: String) {
-        navigatedCharacterId = id
+    func navigateToDetail(_ spec: AppViewSpec) {
+        lastDetailSpec = spec
     }
 
     func handleDeeplink(destination: NavigationDestionation) {
@@ -55,9 +61,14 @@ final class MockEpisodesCoordinator: Coordinator, EpisodesCoordinatorProtocol {
 final class MockLocationsCoordinator: Coordinator, LocationsCoordinatorProtocol {
     private(set) var navigatedLocation: Location?
     private(set) var lastDeeplink: NavigationDestionation?
+    private(set) var lastDetailSpec: AppViewSpec?
 
     func navigateToDetail(location: Location) {
         navigatedLocation = location
+    }
+
+    func navigateToDetail(_ spec: AppViewSpec) {
+        lastDetailSpec = spec
     }
 
     func handleDeeplink(destination: NavigationDestionation) {

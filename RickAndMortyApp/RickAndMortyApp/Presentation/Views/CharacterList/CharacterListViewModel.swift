@@ -9,7 +9,7 @@ import SwiftUI
 import Observation
 
 @Observable
-class CharacterListViewModel: ViewModel<CharacterCoordinatorProtocol>, ViewStateUpdatable {
+class CharacterListViewModel: ViewModel<DetailNavigatingProtocol>, ViewStateUpdatable {
     
     var state: ViewState = .loading
     var searchText = ""
@@ -39,7 +39,7 @@ class CharacterListViewModel: ViewModel<CharacterCoordinatorProtocol>, ViewState
     }
 
     func selectCharacter(_ character: Character) {
-        getCoordinator()?.navigateToDetail(character: character)
+        getCoordinator()?.navigateToDetail(.characterDetail(character, id: nil))
     }
 
     func updateSearch(_ text: String) {

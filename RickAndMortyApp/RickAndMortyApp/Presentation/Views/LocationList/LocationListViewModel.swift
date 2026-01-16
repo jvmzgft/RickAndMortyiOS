@@ -9,7 +9,7 @@ import SwiftUI
 import Observation
 
 @Observable
-class LocationListViewModel: ViewModel<LocationsCoordinatorProtocol>, ViewStateUpdatable {
+class LocationListViewModel: ViewModel<DetailNavigatingProtocol>, ViewStateUpdatable {
     var state: ViewState = .loading
     private(set) var locations: [Location] = []
     private(set) var isLoadingNextPage = false
@@ -56,6 +56,6 @@ class LocationListViewModel: ViewModel<LocationsCoordinatorProtocol>, ViewStateU
     }
 
     func selectLocation(_ location: Location) {
-        getCoordinator()?.navigateToDetail(location: location)
+        getCoordinator()?.navigateToDetail(.locationDetail(location, id: nil))
     }
 }
