@@ -9,7 +9,7 @@ import SwiftUI
 import Observation
 
 @Observable
-class SplashViewModel: ViewModel<AppCoordinatorDelegate> {
+class SplashViewModel: ViewModel<AppCoordinatorProtocol> {
     let splashLottie: String
     
     init(splashLottie: String, coordinator: Coordinator) {

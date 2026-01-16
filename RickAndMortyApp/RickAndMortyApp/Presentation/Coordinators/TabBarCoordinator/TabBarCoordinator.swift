@@ -6,7 +6,6 @@
 //
 
 import SwiftUI
-import Combine
 
 enum NavigationDestionation: Hashable {
     case characters
@@ -21,15 +20,19 @@ protocol TabBarCoordinatorProtocol: AnyObject {
     func handleDeeplink(destination: NavigationDestionation)
 }
 
+@Observable
 class TabBarCoordinator: Coordinator, TabBarCoordinatorProtocol {
-    @Published var selectedTab: TabItems = .characters
-    lazy var characterCoordinator: CharacterCoordinator = CharacterCoordinator(parentCoordinator: self)
-    lazy var episodesCoordinator: EpisodesCoordinator = EpisodesCoordinator(parentCoordinator: self)
-    lazy var locationsCoordinator: LocationsCoordinator = LocationsCoordinator(parentCoordinator: self)
+    var selectedTab: TabItems = .characters
+    var characterCoordinator: CharacterCoordinator?
+    var episodesCoordinator: EpisodesCoordinator?
+    var locationsCoordinator: LocationsCoordinator?
     
     init(parentCoordinator: Coordinator) {
         super.init()
         self.parentCoordinator = parentCoordinator
+        self.characterCoordinator = CharacterCoordinator(parentCoordinator: self)
+        self.episodesCoordinator = EpisodesCoordinator(parentCoordinator: self)
+        self.locationsCoordinator = LocationsCoordinator(parentCoordinator: self)
     }
     
     func handleDeeplink(destination: NavigationDestionation) {
@@ -37,13 +40,13 @@ class TabBarCoordinator: Coordinator, TabBarCoordinatorProtocol {
         switch destination {
         case .characters, .character:
             selectedTab = .characters
-            characterCoordinator.handleDeeplink(destination: destination)
+            characterCoordinator?.handleDeeplink(destination: destination)
         case .locations, .location:
             selectedTab = .locations
-            locationsCoordinator.handleDeeplink(destination: destination)
+            locationsCoordinator?.handleDeeplink(destination: destination)
         case .episodes, .episode:
             selectedTab = .episodes
-            episodesCoordinator.handleDeeplink(destination: destination)
+            episodesCoordinator?.handleDeeplink(destination: destination)
         }
     }
 }

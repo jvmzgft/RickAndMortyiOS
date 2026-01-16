@@ -5,19 +5,20 @@
 //  Created by Martinez Montilla, Javier on 12/1/26.
 //
 
-import Combine
+import Observation
 
-protocol AppCoordinatorDelegate: AnyObject {
+protocol AppCoordinatorProtocol: AnyObject {
     func navigateToTabBar()
 }
 
-class AppCoordinator: Coordinator, AppCoordinatorDelegate {
+@Observable
+class AppCoordinator: Coordinator, AppCoordinatorProtocol {
     enum AppCoordinatorScreen {
         case splash
         case tabView
     }
     
-    @Published var currentScreen: AppCoordinatorScreen = .splash
+    var currentScreen: AppCoordinatorScreen = .splash
         
     @MainActor
     func navigateToTabBar() {

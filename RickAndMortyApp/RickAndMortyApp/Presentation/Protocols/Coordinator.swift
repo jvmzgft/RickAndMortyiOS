@@ -5,8 +5,8 @@
 //  Created by Martinez Montilla, Javier on 12/1/26.
 //
 
-import Combine
+import Foundation
 
-open class Coordinator: ObservableObject {
+open class Coordinator {
     weak var parentCoordinator: Coordinator?
 }

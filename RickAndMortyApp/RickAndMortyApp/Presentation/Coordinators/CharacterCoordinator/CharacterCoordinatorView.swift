@@ -9,11 +9,11 @@ import SwiftUI
 import Combine
 
 struct CharacterCoordinatorView: View {
-    @StateObject var coordinator: CharacterCoordinator
+    @State var coordinator: CharacterCoordinator
     @StateObject private var path: CharacterPath
     
     init(coordinator: CharacterCoordinator) {
-        _coordinator = StateObject(wrappedValue: coordinator)
+        _coordinator = State(wrappedValue: coordinator)
         _path = StateObject(wrappedValue: coordinator.myCharacterPath)
     }
     
