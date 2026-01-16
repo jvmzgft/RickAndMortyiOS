@@ -8,8 +8,19 @@
 import Foundation
 
 protocol NavigatingProtocol: AnyObject {
+    var path: AppPath { get set }
     func navigateToDetail(_ spec: AppViewSpec)
     func handleDeeplink(destination: NavigationDestionation)
+}
+
+extension NavigatingProtocol {
+    func navigateToDetail(_ spec: AppViewSpec) {
+        switch spec {
+        case .characterDetail, .episodeDetail, .locationDetail:
+            path.push(spec)
+        default: break
+        }
+    }
 }
 
 open class Coordinator {

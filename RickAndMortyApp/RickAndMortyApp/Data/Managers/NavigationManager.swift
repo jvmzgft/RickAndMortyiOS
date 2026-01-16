@@ -41,12 +41,4 @@ class NavigationManager<T: ViewSpec> {
     }
 }
 
-typealias CharacterPath = NavigationManager<AppViewSpec>
-typealias EpisodesPath = NavigationManager<AppViewSpec>
-typealias LocationsPath = NavigationManager<AppViewSpec>
-
-struct NavigationFactory {
-    static let characterPath: NavigationManager<AppViewSpec> = NavigationManager<AppViewSpec>()
-    static let episodesPath: NavigationManager<AppViewSpec> = NavigationManager<AppViewSpec>()
-    static let locationsPath: NavigationManager<AppViewSpec> = NavigationManager<AppViewSpec>()
-}
+typealias AppPath = NavigationManager<AppViewSpec>

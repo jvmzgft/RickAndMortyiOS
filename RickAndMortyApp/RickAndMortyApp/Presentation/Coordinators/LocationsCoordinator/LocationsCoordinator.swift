@@ -14,7 +14,7 @@ protocol LocationsCoordinatorProtocol: AnyObject, NavigatingProtocol {
 
 @Observable
 class LocationsCoordinator: Coordinator, LocationsCoordinatorProtocol {
-    var myLocationsPath: LocationsPath = NavigationFactory.locationsPath
+    var path: AppPath = AppPath()
 
     init(parentCoordinator: Coordinator? = nil) {
         super.init()
@@ -22,21 +22,13 @@ class LocationsCoordinator: Coordinator, LocationsCoordinatorProtocol {
     }
     
     func navigateToDetail(location: Location) {
-        myLocationsPath.push(.locationDetail(location, id: nil))
-    }
-
-    func navigateToDetail(_ spec: AppViewSpec) {
-        switch spec {
-        case .characterDetail, .episodeDetail, .locationDetail:
-            myLocationsPath.push(spec)
-        default: break
-        }
+        path.push(.locationDetail(location, id: nil))
     }
     
     func handleDeeplink(destination: NavigationDestionation) {
         switch destination {
         case .locations:
-            myLocationsPath.popToRoot()
+            path.popToRoot()
         default:
             (parentCoordinator as? TabBarCoordinatorProtocol)?.handleDeeplink(destination: destination)
         }

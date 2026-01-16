@@ -15,7 +15,7 @@ protocol CharacterCoordinatorProtocol: AnyObject, NavigatingProtocol {
 
 @Observable
 class CharacterCoordinator: Coordinator, CharacterCoordinatorProtocol {
-    var myCharacterPath: CharacterPath = NavigationFactory.characterPath
+    var path: AppPath = AppPath()
 
     init(parentCoordinator: Coordinator? = nil) {
         super.init()
@@ -23,29 +23,21 @@ class CharacterCoordinator: Coordinator, CharacterCoordinatorProtocol {
     }
     
     func navigateToDetail(character: Character) {
-        myCharacterPath.push(.characterDetail(character, id: nil))
+        path.push(.characterDetail(character, id: nil))
     }
 
     func navigateToEpisodeDetail(id: String) {
-        myCharacterPath.push(.episodeDetail(nil, id: id))
+        path.push(.episodeDetail(nil, id: id))
     }
 
     func navigateToLocationDetail(id: String) {
-        myCharacterPath.push(.locationDetail(nil, id: id))
-    }
-
-    func navigateToDetail(_ spec: AppViewSpec) {
-        switch spec {
-        case .characterDetail, .episodeDetail, .locationDetail:
-            myCharacterPath.push(spec)
-        default: break
-        }
+        path.push(.locationDetail(nil, id: id))
     }
     
     func handleDeeplink(destination: NavigationDestionation) {
         switch destination {
         case .characters:
-            myCharacterPath.popToRoot()
+            path.popToRoot()
         default:
             (parentCoordinator as? TabBarCoordinatorProtocol)?.handleDeeplink(destination: destination)
         }

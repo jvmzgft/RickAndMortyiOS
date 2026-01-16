@@ -9,11 +9,11 @@ import SwiftUI
 
 struct EpisodesCoordinatorView: View {
     @State var coordinator: EpisodesCoordinator
-    @State private var path: EpisodesPath
+    @State private var path: AppPath
 
     init(coordinator: EpisodesCoordinator) {
         _coordinator = State(wrappedValue: coordinator)
-        _path = State(wrappedValue: coordinator.myEpisodesPath)
+        _path = State(wrappedValue: coordinator.path)
     }
 
     var body: some View {

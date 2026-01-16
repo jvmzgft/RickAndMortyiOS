@@ -14,29 +14,21 @@ protocol EpisodesCoordinatorProtocol: AnyObject, NavigatingProtocol {
 
 @Observable
 class EpisodesCoordinator: Coordinator, EpisodesCoordinatorProtocol {
-    var myEpisodesPath: EpisodesPath = NavigationFactory.episodesPath
-
+    var path: AppPath = AppPath()
+    
     init(parentCoordinator: Coordinator? = nil) {
         super.init()
         self.parentCoordinator = parentCoordinator
     }
 
     func navigateToDetail(episode: Episode) {
-        myEpisodesPath.push(.episodeDetail(episode, id: nil))
-    }
-
-    func navigateToDetail(_ spec: AppViewSpec) {
-        switch spec {
-        case .characterDetail, .episodeDetail, .locationDetail:
-            myEpisodesPath.push(spec)
-        default: break
-        }
+        path.push(.episodeDetail(episode, id: nil))
     }
     
     func handleDeeplink(destination: NavigationDestionation) {
         switch destination {
         case .episodes:
-            myEpisodesPath.popToRoot()
+            path.popToRoot()
         default:
             (parentCoordinator as? TabBarCoordinatorProtocol)?.handleDeeplink(destination: destination)
         }
