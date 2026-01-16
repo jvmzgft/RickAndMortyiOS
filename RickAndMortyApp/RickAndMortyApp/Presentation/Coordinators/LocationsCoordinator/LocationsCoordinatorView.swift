@@ -9,11 +9,11 @@ import SwiftUI
 
 struct LocationsCoordinatorView: View {
     @State var coordinator: LocationsCoordinator
-    @StateObject private var path: LocationsPath
+    @State private var path: LocationsPath
 
     init(coordinator: LocationsCoordinator) {
         _coordinator = State(wrappedValue: coordinator)
-        _path = StateObject(wrappedValue: coordinator.myLocationsPath)
+        _path = State(wrappedValue: coordinator.myLocationsPath)
     }
 
     var body: some View {

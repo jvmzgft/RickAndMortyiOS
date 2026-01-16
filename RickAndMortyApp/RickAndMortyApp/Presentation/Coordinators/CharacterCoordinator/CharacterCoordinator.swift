@@ -6,7 +6,6 @@
 //
 
 import SwiftUI
-import Combine
 
 protocol CharacterCoordinatorProtocol: AnyObject, DetailNavigatingProtocol {
     func navigateToDetail(character: Character)
@@ -15,6 +14,7 @@ protocol CharacterCoordinatorProtocol: AnyObject, DetailNavigatingProtocol {
     func handleDeeplink(destination: NavigationDestionation)
 }
 
+@Observable
 class CharacterCoordinator: Coordinator, CharacterCoordinatorProtocol {
     var myCharacterPath: CharacterPath = NavigationFactory.characterPath
 

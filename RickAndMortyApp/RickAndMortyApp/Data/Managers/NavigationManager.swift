@@ -6,7 +6,7 @@
 //
 
 import SwiftUI
-import Combine
+import Observation
 
 protocol ViewSpec: Hashable {}
 
@@ -19,8 +19,9 @@ enum AppViewSpec: ViewSpec {
     case locationDetail(Location?, id: String?)
 }
 
-class NavigationManager<T: ViewSpec>: ObservableObject {
-    @Published var path = NavigationPath()
+@Observable
+class NavigationManager<T: ViewSpec> {
+    var path = NavigationPath()
     
     func popToRoot() {
         path = NavigationPath()

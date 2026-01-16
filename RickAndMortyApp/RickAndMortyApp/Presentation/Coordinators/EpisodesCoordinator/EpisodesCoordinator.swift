@@ -12,6 +12,7 @@ protocol EpisodesCoordinatorProtocol: AnyObject, DetailNavigatingProtocol {
     func handleDeeplink(destination: NavigationDestionation)
 }
 
+@Observable
 class EpisodesCoordinator: Coordinator, EpisodesCoordinatorProtocol {
     var myEpisodesPath: EpisodesPath = NavigationFactory.episodesPath
 

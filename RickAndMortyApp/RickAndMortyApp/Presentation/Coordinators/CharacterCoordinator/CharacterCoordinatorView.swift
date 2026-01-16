@@ -6,15 +6,14 @@
 //
 
 import SwiftUI
-import Combine
 
 struct CharacterCoordinatorView: View {
     @State var coordinator: CharacterCoordinator
-    @StateObject private var path: CharacterPath
+    @State private var path: CharacterPath
     
     init(coordinator: CharacterCoordinator) {
         _coordinator = State(wrappedValue: coordinator)
-        _path = StateObject(wrappedValue: coordinator.myCharacterPath)
+        _path = State(wrappedValue: coordinator.myCharacterPath)
     }
     
     var body: some View {
