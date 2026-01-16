@@ -6,11 +6,12 @@
 //
 
 import Foundation
-import Combine
+import Observation
 
+@Observable
 class CharacterDetailsViewModel: ViewModel<CharacterCoordinatorProtocol>, ViewStateUpdatable {
-    @Published var state: ViewState = .loading
-    @Published private(set) var character: Character?
+    var state: ViewState = .loading
+    private(set) var character: Character?
 
     private let apiClient: APIClient?
     private let characterId: String?

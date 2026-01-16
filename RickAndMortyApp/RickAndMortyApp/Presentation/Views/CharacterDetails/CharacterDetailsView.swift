@@ -8,10 +8,10 @@
 import SwiftUI
 
 struct CharacterDetailsView: View {
-    @StateObject private var viewModel: CharacterDetailsViewModel
+    @State private var viewModel: CharacterDetailsViewModel
 
     init(viewModel: CharacterDetailsViewModel) {
-        _viewModel = StateObject( wrappedValue: viewModel )
+        _viewModel = State(wrappedValue: viewModel)
     }
 
     var body: some View {

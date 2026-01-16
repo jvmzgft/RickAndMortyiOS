@@ -8,10 +8,10 @@
 import SwiftUI
 
 struct EpisodeDetailsView: View {
-    @StateObject private var viewModel: EpisodeDetailsViewModel
+    @State private var viewModel: EpisodeDetailsViewModel
 
     init(viewModel: EpisodeDetailsViewModel) {
-        _viewModel = StateObject(wrappedValue: viewModel)
+        _viewModel = State(wrappedValue: viewModel)
     }
 
     var body: some View {

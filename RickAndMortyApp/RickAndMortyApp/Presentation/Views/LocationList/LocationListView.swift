@@ -8,10 +8,10 @@
 import SwiftUI
 
 struct LocationListView: View {
-    @StateObject private var viewModel: LocationListViewModel
+    @State private var viewModel: LocationListViewModel
 
     init(viewModel: LocationListViewModel) {
-        _viewModel = StateObject(wrappedValue: viewModel)
+        _viewModel = State(wrappedValue: viewModel)
     }
 
     var body: some View {

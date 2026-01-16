@@ -5,14 +5,14 @@
 //  Created by Martinez Montilla, Javier on 12/1/26.
 //
 
-import Combine
+import Foundation
 
 private protocol ViewModelProperties: AnyObject {
     associatedtype ViewModelCoordinator
     func getCoordinator() -> ViewModelCoordinator?
 }
 
-internal class ViewModel<ViewModelCoordinator>: ViewModelProperties, ObservableObject {
+internal class ViewModel<ViewModelCoordinator>: ViewModelProperties {
     private weak var coordinator: Coordinator?
     
     internal init(coordinator: Coordinator) {

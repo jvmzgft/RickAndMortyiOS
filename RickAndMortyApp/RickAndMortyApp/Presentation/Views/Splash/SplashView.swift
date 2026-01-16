@@ -9,7 +9,7 @@ import SwiftUI
 
 struct SplashView: View {
     @Environment(\.colorScheme) var colorScheme
-    @StateObject var viewModel: SplashViewModel
+    @State var viewModel: SplashViewModel
     @State private var fadeOut = false
     
     var body: some View {
@@ -26,4 +26,3 @@ struct SplashView: View {
         .padding()
     }
 }
-

@@ -6,12 +6,13 @@
 //
 
 import SwiftUI
-import Combine
+import Observation
 
+@Observable
 class LocationListViewModel: ViewModel<LocationsCoordinatorProtocol>, ViewStateUpdatable {
-    @Published var state: ViewState = .loading
-    @Published private(set) var locations: [Location] = []
-    @Published private(set) var isLoadingNextPage = false
+    var state: ViewState = .loading
+    private(set) var locations: [Location] = []
+    private(set) var isLoadingNextPage = false
 
     private let apiClient: APIClient
     private var currentPage = 1

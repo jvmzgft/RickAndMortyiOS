@@ -6,11 +6,12 @@
 //
 
 import Foundation
-import Combine
+import Observation
 
+@Observable
 class LocationDetailsViewModel: ViewModel<LocationsCoordinatorProtocol>, ViewStateUpdatable {
-    @Published var state: ViewState = .loading
-    @Published private(set) var location: Location?
+    var state: ViewState = .loading
+    private(set) var location: Location?
 
     private let apiClient: APIClient?
     private let locationId: String?
