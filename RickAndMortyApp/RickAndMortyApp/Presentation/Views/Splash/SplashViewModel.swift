@@ -17,7 +17,6 @@ class SplashViewModel: ViewModel<AppCoordinatorProtocol> {
         super.init(coordinator: coordinator)
     }
     
-    @MainActor
     func goToTabBar() {
         getCoordinator()?.navigateToTabBar()
     }

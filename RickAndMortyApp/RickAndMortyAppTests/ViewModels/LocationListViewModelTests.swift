@@ -56,4 +56,17 @@ final class LocationListViewModelTests: XCTestCase {
         }
         XCTAssertEqual(mock.requests.count, 2)
     }
+
+    func testSelectLocationNotifiesCoordinator() async {
+        let mock = MockAPIClient()
+        let coordinator = MockLocationsCoordinator()
+        let viewModel = LocationListViewModel(coordinator: coordinator, apiClient: mock)
+        let location = makeLocation(id: 10)
+
+        viewModel.selectLocation(location)
+
+        await MainActor.run {
+            XCTAssertEqual(coordinator.lastDetailSpec, .locationDetail(location, id: nil))
+        }
+    }
 }

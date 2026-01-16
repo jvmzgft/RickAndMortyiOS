@@ -106,7 +106,7 @@ final class CharacterListViewModelTests: XCTestCase {
         viewModel.selectCharacter(character)
 
         await MainActor.run {
-            XCTAssertEqual(coordinator.navigatedCharacter?.id, character.id)
+            XCTAssertEqual(coordinator.lastDetailSpec, .characterDetail(character, id: nil))
         }
     }
 }

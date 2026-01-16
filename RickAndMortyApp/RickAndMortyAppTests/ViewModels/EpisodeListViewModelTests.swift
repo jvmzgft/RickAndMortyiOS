@@ -56,4 +56,17 @@ final class EpisodeListViewModelTests: XCTestCase {
         }
         XCTAssertEqual(mock.requests.count, 2)
     }
+
+    func testSelectEpisodeNotifiesCoordinator() async {
+        let mock = MockAPIClient()
+        let coordinator = MockEpisodesCoordinator()
+        let viewModel = EpisodeListViewModel(coordinator: coordinator, apiClient: mock)
+        let episode = makeEpisode(id: 10)
+
+        viewModel.selectEpisode(episode)
+
+        await MainActor.run {
+            XCTAssertEqual(coordinator.lastDetailSpec, .episodeDetail(episode, id: nil))
+        }
+    }
 }

@@ -8,7 +8,6 @@
 import Foundation
 @testable import RickAndMortyApp
 
-@MainActor
 final class MockCharacterCoordinator: Coordinator, CharacterCoordinatorProtocol {
     private(set) var navigatedCharacter: Character?
     private(set) var navigatedEpisodeId: String?
@@ -37,7 +36,6 @@ final class MockCharacterCoordinator: Coordinator, CharacterCoordinatorProtocol 
     }
 }
 
-@MainActor
 final class MockEpisodesCoordinator: Coordinator, EpisodesCoordinatorProtocol {
     private(set) var navigatedEpisode: Episode?
     private(set) var navigatedCharacterId: String?
@@ -57,7 +55,6 @@ final class MockEpisodesCoordinator: Coordinator, EpisodesCoordinatorProtocol {
     }
 }
 
-@MainActor
 final class MockLocationsCoordinator: Coordinator, LocationsCoordinatorProtocol {
     private(set) var navigatedLocation: Location?
     private(set) var lastDeeplink: NavigationDestionation?
@@ -73,5 +70,14 @@ final class MockLocationsCoordinator: Coordinator, LocationsCoordinatorProtocol 
 
     func handleDeeplink(destination: NavigationDestionation) {
         lastDeeplink = destination
+    }
+}
+
+@MainActor
+final class MockAppCoordinator: Coordinator, AppCoordinatorProtocol {
+    private(set) var didNavigateToTabBar = false
+
+    func navigateToTabBar() {
+        didNavigateToTabBar = true
     }
 }
