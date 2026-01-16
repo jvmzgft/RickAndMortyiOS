@@ -9,7 +9,7 @@ import Foundation
 import Observation
 
 @Observable
-class CharacterDetailsViewModel: ViewModel<DetailNavigatingProtocol>, ViewStateUpdatable {
+class CharacterDetailsViewModel: ViewModel<NavigatingProtocol>, ViewStateUpdatable {
     var state: ViewState = .loading
     private(set) var character: Character?
 
@@ -59,5 +59,13 @@ class CharacterDetailsViewModel: ViewModel<DetailNavigatingProtocol>, ViewStateU
 
     func handleLocationTap(_ locationId: String) {
         getCoordinator()?.navigateToDetail(.locationDetail(nil, id: locationId))
+    }
+
+    func handleSeeAllEpisodes() {
+        getCoordinator()?.handleDeeplink(destination: .episodes)
+    }
+
+    func handleSeeAllLocations() {
+        getCoordinator()?.handleDeeplink(destination: .locations)
     }
 }

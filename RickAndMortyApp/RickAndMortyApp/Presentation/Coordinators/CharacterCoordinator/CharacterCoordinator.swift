@@ -7,11 +7,10 @@
 
 import SwiftUI
 
-protocol CharacterCoordinatorProtocol: AnyObject, DetailNavigatingProtocol {
+protocol CharacterCoordinatorProtocol: AnyObject, NavigatingProtocol {
     func navigateToDetail(character: Character)
     func navigateToEpisodeDetail(id: String)
     func navigateToLocationDetail(id: String)
-    func handleDeeplink(destination: NavigationDestionation)
 }
 
 @Observable
@@ -47,7 +46,8 @@ class CharacterCoordinator: Coordinator, CharacterCoordinatorProtocol {
         switch destination {
         case .characters:
             myCharacterPath.popToRoot()
-        default: break
+        default:
+            (parentCoordinator as? TabBarCoordinatorProtocol)?.handleDeeplink(destination: destination)
         }
     }
 }

@@ -65,7 +65,6 @@ struct CharacterDetailsView: View {
                 infoRow(title: "Type", value: character.type.isEmpty ? "Unknown" : character.type)
                 infoRow(title: "Origin", value: character.origin.name)
                 infoRow(title: "Current location", value: character.location.name)
-                infoRow(title: "Episodes", value: "\(character.episode.count)")
 
                 if let character = viewModel.character {
                     if !character.episodeIds.isEmpty {
@@ -76,16 +75,32 @@ struct CharacterDetailsView: View {
                             FourColumnButtonGrid(items: character.episodeIds) { episodeId in
                                 viewModel.handleEpisodeTap(episodeId)
                             }
+                            HStack {
+                                Spacer()
+                                Button("See all episodes".uppercased()) {
+                                    viewModel.handleSeeAllEpisodes()
+                                }
+                                .font(.caption)
+                                .foregroundStyle(.secondary)
+                            }
                         }
                     }
                     
                     if !character.locationIds.isEmpty {
-                        VStack(alignment: .leading, spacing: 8) {
+                        VStack(alignment: .leading, spacing: 12) {
                             Text("LOCATIONS")
                                 .font(.caption)
                                 .foregroundStyle(.secondary)
                             FourColumnButtonGrid(items: character.locationIds) { locationId in
                                 viewModel.handleLocationTap(locationId)
+                            }
+                            HStack {
+                                Spacer()
+                                Button("See all locations".uppercased()) {
+                                    viewModel.handleSeeAllLocations()
+                                }
+                                .font(.caption)
+                                .foregroundStyle(.secondary)
                             }
                         }
                     }

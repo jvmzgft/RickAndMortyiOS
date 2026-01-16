@@ -9,7 +9,7 @@ import SwiftUI
 import Observation
 
 @Observable
-class CharacterListViewModel: ViewModel<DetailNavigatingProtocol>, ViewStateUpdatable {
+class CharacterListViewModel: ViewModel<NavigatingProtocol>, ViewStateUpdatable {
     
     var state: ViewState = .loading
     var searchText = ""

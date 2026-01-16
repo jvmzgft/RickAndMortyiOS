@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-protocol EpisodesCoordinatorProtocol: AnyObject, DetailNavigatingProtocol {
+protocol EpisodesCoordinatorProtocol: AnyObject, NavigatingProtocol {
     func navigateToDetail(episode: Episode)
     func handleDeeplink(destination: NavigationDestionation)
 }
@@ -37,7 +37,8 @@ class EpisodesCoordinator: Coordinator, EpisodesCoordinatorProtocol {
         switch destination {
         case .episodes:
             myEpisodesPath.popToRoot()
-        default: break
+        default:
+            (parentCoordinator as? TabBarCoordinatorProtocol)?.handleDeeplink(destination: destination)
         }
     }
 }

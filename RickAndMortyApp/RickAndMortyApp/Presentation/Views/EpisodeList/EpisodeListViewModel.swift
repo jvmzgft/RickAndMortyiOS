@@ -9,7 +9,7 @@ import SwiftUI
 import Observation
 
 @Observable
-class EpisodeListViewModel: ViewModel<DetailNavigatingProtocol>, ViewStateUpdatable {
+class EpisodeListViewModel: ViewModel<NavigatingProtocol>, ViewStateUpdatable {
     var state: ViewState = .loading
     private(set) var episodes: [Episode] = []
     private(set) var isLoadingNextPage = false

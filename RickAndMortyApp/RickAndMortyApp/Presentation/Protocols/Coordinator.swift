@@ -7,8 +7,9 @@
 
 import Foundation
 
-protocol DetailNavigatingProtocol: AnyObject {
+protocol NavigatingProtocol: AnyObject {
     func navigateToDetail(_ spec: AppViewSpec)
+    func handleDeeplink(destination: NavigationDestionation)
 }
 
 open class Coordinator {

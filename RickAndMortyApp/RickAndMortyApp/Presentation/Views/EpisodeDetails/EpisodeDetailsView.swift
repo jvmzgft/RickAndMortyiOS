@@ -61,14 +61,22 @@ struct EpisodeDetailsView: View {
                 infoRow(title: "URL", value: episode.url)
                 infoRow(title: "Created", value: episode.created)
 
-                VStack(alignment: .leading, spacing: 8) {
+                VStack(alignment: .leading, spacing: 12) {
                     Text("CHARACTERS")
                         .font(.caption)
                         .foregroundStyle(.secondary)
                     FourColumnButtonGrid(items: episode.characterIds) { characterId in
                         viewModel.handleCharacterTap(characterId)
                     }
+                    HStack {
+                        Spacer()
+                    Button("See all characters".uppercased()) {
+                        viewModel.handleSeeAllCharacters()
+                    }
+                    .font(.caption)
+                    .foregroundStyle(.secondary)
                 }
+            }
             }
             .frame(maxWidth: .infinity, alignment: .leading)
         }

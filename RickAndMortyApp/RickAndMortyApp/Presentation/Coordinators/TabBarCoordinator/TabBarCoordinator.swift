@@ -33,7 +33,6 @@ class TabBarCoordinator: Coordinator, TabBarCoordinatorProtocol {
     }
     
     func handleDeeplink(destination: NavigationDestionation) {
-        print("LLego al tabBar coordinator, toca redirigir")
         switch destination {
         case .characters:
             selectedTab = .characters

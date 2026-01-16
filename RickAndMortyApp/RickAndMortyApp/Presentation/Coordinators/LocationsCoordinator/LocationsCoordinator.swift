@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-protocol LocationsCoordinatorProtocol: AnyObject, DetailNavigatingProtocol {
+protocol LocationsCoordinatorProtocol: AnyObject, NavigatingProtocol {
     func navigateToDetail(location: Location)
     func handleDeeplink(destination: NavigationDestionation)
 }
@@ -37,7 +37,8 @@ class LocationsCoordinator: Coordinator, LocationsCoordinatorProtocol {
         switch destination {
         case .locations:
             myLocationsPath.popToRoot()
-        default: break
+        default:
+            (parentCoordinator as? TabBarCoordinatorProtocol)?.handleDeeplink(destination: destination)
         }
     }
 }

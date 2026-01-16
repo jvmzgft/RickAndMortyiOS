@@ -63,14 +63,22 @@ struct LocationDetailsView: View {
                 infoRow(title: "Residents", value: "\(location.residents.count)")
 
                 if let location = viewModel.location, !location.residentIds.isEmpty {
-                    VStack(alignment: .leading, spacing: 8) {
+                    VStack(alignment: .leading, spacing: 12) {
                         Text("RESIDENTS")
                             .font(.caption)
                             .foregroundStyle(.secondary)
                         FourColumnButtonGrid(items: location.residentIds) { characterId in
                             viewModel.handleResidentTap(characterId)
                         }
+                        HStack {
+                            Spacer()
+                        Button("See all characters".uppercased()) {
+                            viewModel.handleSeeAllCharacters()
+                        }
+                        .font(.caption)
+                        .foregroundStyle(.secondary)
                     }
+                }
                 }
             }
             .frame(maxWidth: .infinity, alignment: .leading)
