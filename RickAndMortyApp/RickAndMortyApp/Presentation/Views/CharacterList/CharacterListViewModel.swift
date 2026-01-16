@@ -6,14 +6,15 @@
 //
 
 import SwiftUI
-import Combine
+import Observation
 
+@Observable
 class CharacterListViewModel: ViewModel<CharacterCoordinatorProtocol>, ViewStateUpdatable {
     
-    @Published var state: ViewState = .loading
-    @Published var searchText = ""
-    @Published private(set) var characters: [Character] = []
-    @Published private(set) var isLoadingNextPage = false
+    var state: ViewState = .loading
+    var searchText = ""
+    private(set) var characters: [Character] = []
+    private(set) var isLoadingNextPage = false
     private let apiClient: APIClient
     private var currentPage = 1
     private var hasNextPage = true

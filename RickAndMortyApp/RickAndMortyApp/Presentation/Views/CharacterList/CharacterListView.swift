@@ -8,13 +8,14 @@
 import SwiftUI
 
 struct CharacterListView: View {
-    @StateObject private var viewModel: CharacterListViewModel
+    @State private var viewModel: CharacterListViewModel
     
     init(viewModel: CharacterListViewModel) {
-        _viewModel = StateObject(wrappedValue: viewModel)
+        _viewModel = State(wrappedValue: viewModel)
     }
     
     var body: some View {
+        @Bindable var viewModel = viewModel
         contentView()
         .task {
             await viewModel.loadCharacters()
