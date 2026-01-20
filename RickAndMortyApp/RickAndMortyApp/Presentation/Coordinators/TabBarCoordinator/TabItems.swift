@@ -15,11 +15,11 @@ enum TabItems: Hashable {
     var title: String {
         switch self {
         case .characters:
-            "Characters"
+            "tab_characters_title".localized
         case .locations:
-            "Locations"
+            "tab_locations_title".localized
         case .episodes:
-            "Episodes"
+            "tab_episodes_title".localized
         }
     }
     
