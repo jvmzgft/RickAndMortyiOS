@@ -30,6 +30,6 @@ struct AppCoordinatorView: View {
     
     @ViewBuilder
     private func tabView() -> some View {
-        TabBarCoordinatorView(coordinator: TabBarCoordinator(parentCoordinator: coordinator))
+        TabBarCoordinatorView(coordinator: coordinator.tabBarCoordinator ?? TabBarCoordinator(parentCoordinator: coordinator))
     }
 }
