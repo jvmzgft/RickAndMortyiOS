@@ -7,10 +7,7 @@
 
 import SwiftUI
 
-protocol LocationsCoordinatorProtocol: AnyObject, NavigatingProtocol {
-    func navigateToDetail(location: Location)
-    func handleDeeplink(destination: NavigationDestionation)
-}
+protocol LocationsCoordinatorProtocol: AnyObject, NavigatingProtocol {}
 
 @Observable
 class LocationsCoordinator: Coordinator, LocationsCoordinatorProtocol {
@@ -19,10 +16,6 @@ class LocationsCoordinator: Coordinator, LocationsCoordinatorProtocol {
     init(parentCoordinator: Coordinator? = nil) {
         super.init()
         self.parentCoordinator = parentCoordinator
-    }
-    
-    func navigateToDetail(location: Location) {
-        path.push(.locationDetail(location, id: nil))
     }
     
     func handleDeeplink(destination: NavigationDestionation) {

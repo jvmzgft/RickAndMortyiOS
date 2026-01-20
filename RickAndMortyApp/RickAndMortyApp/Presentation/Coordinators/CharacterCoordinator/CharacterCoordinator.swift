@@ -7,11 +7,7 @@
 
 import SwiftUI
 
-protocol CharacterCoordinatorProtocol: AnyObject, NavigatingProtocol {
-    func navigateToDetail(character: Character)
-    func navigateToEpisodeDetail(id: String)
-    func navigateToLocationDetail(id: String)
-}
+protocol CharacterCoordinatorProtocol: AnyObject, NavigatingProtocol {}
 
 @Observable
 class CharacterCoordinator: Coordinator, CharacterCoordinatorProtocol {
@@ -20,18 +16,6 @@ class CharacterCoordinator: Coordinator, CharacterCoordinatorProtocol {
     init(parentCoordinator: Coordinator? = nil) {
         super.init()
         self.parentCoordinator = parentCoordinator
-    }
-    
-    func navigateToDetail(character: Character) {
-        path.push(.characterDetail(character, id: nil))
-    }
-
-    func navigateToEpisodeDetail(id: String) {
-        path.push(.episodeDetail(nil, id: id))
-    }
-
-    func navigateToLocationDetail(id: String) {
-        path.push(.locationDetail(nil, id: id))
     }
     
     func handleDeeplink(destination: NavigationDestionation) {

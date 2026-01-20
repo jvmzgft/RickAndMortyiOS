@@ -7,10 +7,7 @@
 
 import SwiftUI
 
-protocol EpisodesCoordinatorProtocol: AnyObject, NavigatingProtocol {
-    func navigateToDetail(episode: Episode)
-    func handleDeeplink(destination: NavigationDestionation)
-}
+protocol EpisodesCoordinatorProtocol: AnyObject, NavigatingProtocol {}
 
 @Observable
 class EpisodesCoordinator: Coordinator, EpisodesCoordinatorProtocol {
@@ -19,10 +16,6 @@ class EpisodesCoordinator: Coordinator, EpisodesCoordinatorProtocol {
     init(parentCoordinator: Coordinator? = nil) {
         super.init()
         self.parentCoordinator = parentCoordinator
-    }
-
-    func navigateToDetail(episode: Episode) {
-        path.push(.episodeDetail(episode, id: nil))
     }
     
     func handleDeeplink(destination: NavigationDestionation) {
