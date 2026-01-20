@@ -1,5 +1,5 @@
 //
-//  Coordinator.swift
+//  NavigatingCoordinator.swift
 //  RickAndMortyApp
 //
 //  Created by Martinez Montilla, Javier on 12/1/26.
@@ -14,22 +14,20 @@ protocol NavigatingProtocol: AnyObject {
     func clearPath()
 }
 
-extension NavigatingProtocol {
-    func navigateTo(_ spec: AppViewSpec) {
-        path.push(spec)
-    }
-    
-    func clearPath() {
-        path.popToRoot()
-    }
-}
-
 open class NavigatingCoordinator: NavigatingProtocol {
     var path: AppPath = AppPath()
     weak var parentCoordinator: NavigatingCoordinator?
 
     init(parentCoordinator: NavigatingCoordinator? = nil) {
         self.parentCoordinator = parentCoordinator
+    }
+    
+    func navigateTo(_ spec: AppViewSpec) {
+        path.push(spec)
+    }
+    
+    func clearPath() {
+        path.popToRoot()
     }
 
     func handleDeeplink(destination: NavigationDestionation) {

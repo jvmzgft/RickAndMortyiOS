@@ -8,9 +8,7 @@
 import Foundation
 @testable import RickAndMortyApp
 
-@MainActor
-final class MockCharacterCoordinator: Coordinator, NavigatingProtocol {
-    var path: AppPath = AppPath()
+final class MockCharacterCoordinator: NavigatingCoordinator {
     private(set) var navigatedCharacter: Character?
     private(set) var navigatedEpisodeId: String?
     private(set) var navigatedLocationId: String?
@@ -29,18 +27,16 @@ final class MockCharacterCoordinator: Coordinator, NavigatingProtocol {
         navigatedLocationId = id
     }
 
-    func navigateTo(_ spec: AppViewSpec) {
+    override func navigateTo(_ spec: AppViewSpec) {
         lastDetailSpec = spec
     }
 
-    func handleDeeplink(destination: NavigationDestionation) {
+    override func handleDeeplink(destination: NavigationDestionation) {
         lastDeeplink = destination
     }
 }
 
-@MainActor
-final class MockEpisodesCoordinator: Coordinator, NavigatingProtocol {
-    var path: AppPath = AppPath()
+final class MockEpisodesCoordinator: NavigatingCoordinator {
     private(set) var navigatedEpisode: Episode?
     private(set) var navigatedCharacterId: String?
     private(set) var lastDeeplink: NavigationDestionation?
@@ -50,18 +46,16 @@ final class MockEpisodesCoordinator: Coordinator, NavigatingProtocol {
         navigatedEpisode = episode
     }
 
-    func navigateTo(_ spec: AppViewSpec) {
+    override func navigateTo(_ spec: AppViewSpec) {
         lastDetailSpec = spec
     }
 
-    func handleDeeplink(destination: NavigationDestionation) {
+    override func handleDeeplink(destination: NavigationDestionation) {
         lastDeeplink = destination
     }
 }
 
-@MainActor
-final class MockLocationsCoordinator: Coordinator, NavigatingProtocol {
-    var path: AppPath = AppPath()
+final class MockLocationsCoordinator: NavigatingCoordinator {
     private(set) var navigatedLocation: Location?
     private(set) var lastDeeplink: NavigationDestionation?
     private(set) var lastDetailSpec: AppViewSpec?
@@ -70,17 +64,16 @@ final class MockLocationsCoordinator: Coordinator, NavigatingProtocol {
         navigatedLocation = location
     }
 
-    func navigateTo(_ spec: AppViewSpec) {
+    override func navigateTo(_ spec: AppViewSpec) {
         lastDetailSpec = spec
     }
 
-    func handleDeeplink(destination: NavigationDestionation) {
+    override func handleDeeplink(destination: NavigationDestionation) {
         lastDeeplink = destination
     }
 }
 
-@MainActor
-final class MockAppCoordinator: Coordinator, AppCoordinatorProtocol {
+final class MockAppCoordinator: NavigatingCoordinator, AppCoordinatorProtocol {
     private(set) var didNavigateToTabBar = false
 
     func navigateToTabBar() {
