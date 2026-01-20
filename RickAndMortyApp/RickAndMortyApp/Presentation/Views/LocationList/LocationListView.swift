@@ -29,7 +29,7 @@ struct LocationListView: View {
         case .ready:
             readyView()
         case .error:
-            Text("ERROR")
+            Text(verbatim: "ERROR")
                 .multilineTextAlignment(.center)
                 .padding()
         }
@@ -43,9 +43,9 @@ struct LocationListView: View {
                     viewModel.selectLocation(location)
                 } label: {
                     VStack(alignment: .leading, spacing: 4) {
-                        Text(location.name)
+                        Text(verbatim: location.name)
                             .font(.headline)
-                        Text("\(location.type) - \(location.dimension)")
+                        Text(verbatim: "\(location.type) - \(location.dimension)")
                             .font(.subheadline)
                             .foregroundStyle(.secondary)
                     }

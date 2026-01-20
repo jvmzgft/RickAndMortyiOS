@@ -36,12 +36,12 @@ struct CharacterDetailsView: View {
             if let character = viewModel.character {
                 detailsView(character: character)
             } else {
-                Text("No results")
+                Text(verbatim: "No results")
                     .multilineTextAlignment(.center)
                     .padding()
             }
         case .error:
-            Text("ERROR")
+            Text(verbatim: "ERROR")
                 .multilineTextAlignment(.center)
                 .padding()
         }
@@ -56,10 +56,10 @@ struct CharacterDetailsView: View {
                 .clipShape(RoundedRectangle(cornerRadius: 16, style: .continuous))
 
                 VStack(alignment: .leading, spacing: 8) {
-                    Text(character.name)
+                    Text(verbatim: character.name)
                         .font(.title)
                         .bold()
-                    Text("\(character.status) - \(character.species)")
+                    Text(verbatim: "\(character.status) - \(character.species)")
                         .font(.headline)
                         .foregroundStyle(.secondary)
                 }
@@ -72,7 +72,7 @@ struct CharacterDetailsView: View {
                 if let character = viewModel.character {
                     if !character.episodeIds.isEmpty {
                         VStack(alignment: .leading, spacing: 8) {
-                            Text("EPISODES")
+                            Text(verbatim: "EPISODES")
                                 .font(.caption)
                                 .foregroundStyle(.secondary)
                             FourColumnButtonGrid(items: character.episodeIds) { episodeId in
@@ -91,7 +91,7 @@ struct CharacterDetailsView: View {
                     
                     if !character.locationIds.isEmpty {
                         VStack(alignment: .leading, spacing: 12) {
-                            Text("LOCATIONS")
+                            Text(verbatim: "LOCATIONS")
                                 .font(.caption)
                                 .foregroundStyle(.secondary)
                             FourColumnButtonGrid(items: character.locationIds) { locationId in

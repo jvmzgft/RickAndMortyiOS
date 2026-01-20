@@ -29,7 +29,7 @@ struct EpisodeListView: View {
         case .ready:
             readyView()
         case .error:
-            Text("ERROR")
+            Text(verbatim: "ERROR")
                 .multilineTextAlignment(.center)
                 .padding()
         }
@@ -43,9 +43,9 @@ struct EpisodeListView: View {
                     viewModel.selectEpisode(episode)
                 } label: {
                     VStack(alignment: .leading, spacing: 4) {
-                        Text(episode.name)
+                        Text(verbatim: episode.name)
                             .font(.headline)
-                        Text("\(episode.code) - \(episode.airDate)")
+                        Text(verbatim: "\(episode.code) - \(episode.airDate)")
                             .font(.subheadline)
                             .foregroundStyle(.secondary)
                     }

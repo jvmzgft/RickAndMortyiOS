@@ -36,12 +36,12 @@ struct LocationDetailsView: View {
             if let location = viewModel.location {
                 detailsView(location: location)
             } else {
-                Text("No results")
+                Text(verbatim: "No results")
                     .multilineTextAlignment(.center)
                     .padding()
             }
         case .error:
-            Text("ERROR")
+            Text(verbatim: "ERROR")
                 .multilineTextAlignment(.center)
                 .padding()
         }
@@ -51,10 +51,10 @@ struct LocationDetailsView: View {
         ScrollView {
             VStack(alignment: .leading, spacing: 16) {
                 VStack(alignment: .leading, spacing: 8) {
-                    Text(location.name)
+                    Text(verbatim: location.name)
                         .font(.title)
                         .bold()
-                    Text("\(displayText(location.type)) - \(displayText(location.dimension))")
+                    Text(verbatim: "\(displayText(location.type)) - \(displayText(location.dimension))")
                         .font(.headline)
                         .foregroundStyle(.secondary)
                 }
@@ -67,7 +67,7 @@ struct LocationDetailsView: View {
                 
                 if let location = viewModel.location, !location.residentIds.isEmpty {
                     VStack(alignment: .leading, spacing: 12) {
-                        Text("RESIDENTS")
+                        Text(verbatim: "RESIDENTS")
                             .font(.caption)
                             .foregroundStyle(.secondary)
                         FourColumnButtonGrid(items: location.residentIds) { characterId in

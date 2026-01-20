@@ -36,12 +36,12 @@ struct EpisodeDetailsView: View {
             if let episode = viewModel.episode {
                 detailsView(episode: episode)
             } else {
-                Text("No results")
+                Text(verbatim: "No results")
                     .multilineTextAlignment(.center)
                     .padding()
             }
         case .error:
-            Text("ERROR")
+            Text(verbatim: "ERROR")
                 .multilineTextAlignment(.center)
                 .padding()
         }
@@ -51,10 +51,10 @@ struct EpisodeDetailsView: View {
         ScrollView {
             VStack(alignment: .leading, spacing: 16) {
                 VStack(alignment: .leading, spacing: 8) {
-                    Text(episode.name)
+                    Text(verbatim: episode.name)
                         .font(.title)
                         .bold()
-                    Text("\(episode.code) - \(episode.airDate)")
+                    Text(verbatim: "\(episode.code) - \(episode.airDate)")
                         .font(.headline)
                         .foregroundStyle(.secondary)
                 }
@@ -65,7 +65,7 @@ struct EpisodeDetailsView: View {
                 infoRow(title: "Created", value: episode.created)
 
                 VStack(alignment: .leading, spacing: 12) {
-                    Text("CHARACTERS")
+                    Text(verbatim: "CHARACTERS")
                         .font(.caption)
                         .foregroundStyle(.secondary)
                     FourColumnButtonGrid(items: episode.characterIds) { characterId in
@@ -90,10 +90,10 @@ struct EpisodeDetailsView: View {
     @ViewBuilder
     private func infoRow(title: String, value: String) -> some View {
         VStack(alignment: .leading, spacing: 4) {
-            Text(title.uppercased())
+            Text(verbatim: title.uppercased())
                 .font(.caption)
                 .foregroundStyle(.secondary)
-            Text(value)
+            Text(verbatim: value)
                 .font(.body)
         }
     }

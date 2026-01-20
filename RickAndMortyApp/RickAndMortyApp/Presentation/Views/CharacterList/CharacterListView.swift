@@ -34,7 +34,7 @@ struct CharacterListView: View {
         case .ready:
             readyView()
         case .error:
-            Text("ERROR")
+            Text(verbatim: "ERROR")
                 .multilineTextAlignment(.center)
                 .padding()
         }
@@ -43,7 +43,7 @@ struct CharacterListView: View {
     @ViewBuilder
     private func readyView() -> some View {
         if viewModel.characters.isEmpty {
-            Text("No results available")
+            Text(verbatim: "No results available")
                 .foregroundStyle(.secondary)
                 .frame(maxWidth: .infinity, alignment: .center)
         } else {
@@ -58,9 +58,9 @@ struct CharacterListView: View {
                                 .clipShape(RoundedRectangle(cornerRadius: 8, style: .continuous))
                             
                             VStack(alignment: .leading, spacing: 4) {
-                                Text(character.name)
+                                Text(verbatim: character.name)
                                     .font(.headline)
-                                Text("\(character.species)")
+                                Text(verbatim: "\(character.species)")
                                     .font(.subheadline)
                                     .foregroundStyle(.secondary)
                             }
