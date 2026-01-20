@@ -7,10 +7,8 @@
 
 import SwiftUI
 
-protocol CharacterCoordinatorProtocol: AnyObject, NavigatingProtocol {}
-
 @Observable
-class CharacterCoordinator: Coordinator, CharacterCoordinatorProtocol {
+class CharacterCoordinator: Coordinator, NavigatingProtocol {
     var path: AppPath = AppPath()
 
     init(parentCoordinator: Coordinator? = nil) {

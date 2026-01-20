@@ -7,10 +7,8 @@
 
 import SwiftUI
 
-protocol LocationsCoordinatorProtocol: AnyObject, NavigatingProtocol {}
-
 @Observable
-class LocationsCoordinator: Coordinator, LocationsCoordinatorProtocol {
+class LocationsCoordinator: Coordinator, NavigatingProtocol {
     var path: AppPath = AppPath()
 
     init(parentCoordinator: Coordinator? = nil) {

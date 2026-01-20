@@ -8,7 +8,8 @@
 import Foundation
 @testable import RickAndMortyApp
 
-final class MockCharacterCoordinator: Coordinator, CharacterCoordinatorProtocol {
+@MainActor
+final class MockCharacterCoordinator: Coordinator, NavigatingProtocol {
     var path: AppPath = AppPath()
     private(set) var navigatedCharacter: Character?
     private(set) var navigatedEpisodeId: String?
@@ -37,7 +38,8 @@ final class MockCharacterCoordinator: Coordinator, CharacterCoordinatorProtocol 
     }
 }
 
-final class MockEpisodesCoordinator: Coordinator, EpisodesCoordinatorProtocol {
+@MainActor
+final class MockEpisodesCoordinator: Coordinator, NavigatingProtocol {
     var path: AppPath = AppPath()
     private(set) var navigatedEpisode: Episode?
     private(set) var navigatedCharacterId: String?
@@ -57,7 +59,8 @@ final class MockEpisodesCoordinator: Coordinator, EpisodesCoordinatorProtocol {
     }
 }
 
-final class MockLocationsCoordinator: Coordinator, LocationsCoordinatorProtocol {
+@MainActor
+final class MockLocationsCoordinator: Coordinator, NavigatingProtocol {
     var path: AppPath = AppPath()
     private(set) var navigatedLocation: Location?
     private(set) var lastDeeplink: NavigationDestionation?
