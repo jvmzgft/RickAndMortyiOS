@@ -12,4 +12,8 @@ extension String {
         let trimmed = self.trimmingCharacters(in: CharacterSet(charactersIn: "/"))
         return trimmed.split(separator: "/").last.map(String.init)
     }
+
+    var localized: String {
+        String(localized: .init(self))
+    }
 }

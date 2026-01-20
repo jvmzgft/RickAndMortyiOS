@@ -36,12 +36,12 @@ struct EpisodeDetailsView: View {
             if let episode = viewModel.episode {
                 detailsView(episode: episode)
             } else {
-                Text(verbatim: "No results")
+                Text("generic_no_results")
                     .multilineTextAlignment(.center)
                     .padding()
             }
         case .error:
-            Text(verbatim: "ERROR")
+            Text("generic_error")
                 .multilineTextAlignment(.center)
                 .padding()
         }
@@ -51,21 +51,21 @@ struct EpisodeDetailsView: View {
         ScrollView {
             VStack(alignment: .leading, spacing: 16) {
                 VStack(alignment: .leading, spacing: 8) {
-                    Text(verbatim: episode.name)
+                    Text(episode.name)
                         .font(.title)
                         .bold()
-                    Text(verbatim: "\(episode.code) - \(episode.airDate)")
+                    Text("\(episode.code) - \(episode.airDate)")
                         .font(.headline)
                         .foregroundStyle(.secondary)
                 }
 
-                infoRow(title: "Air date", value: episode.airDate)
-                infoRow(title: "Code", value: episode.code)
+                infoRow(title: "label_air_date".localized.uppercased(), value: episode.airDate)
+                infoRow(title: "label_code".localized.uppercased(), value: episode.code)
                 infoRow(title: "URL", value: episode.url)
-                infoRow(title: "Created", value: episode.created)
+                infoRow(title: "label_created".localized.uppercased(), value: episode.created)
 
                 VStack(alignment: .leading, spacing: 12) {
-                    Text(verbatim: "CHARACTERS")
+                    Text("characters_section_title")
                         .font(.caption)
                         .foregroundStyle(.secondary)
                     FourColumnButtonGrid(items: episode.characterIds) { characterId in
@@ -73,13 +73,15 @@ struct EpisodeDetailsView: View {
                     }
                     HStack {
                         Spacer()
-                    Button("See all characters".uppercased()) {
-                        viewModel.handleSeeAllCharacters()
+                        Button(action: {
+                            viewModel.handleSeeAllCharacters()
+                        }, label: {
+                            Text("see_all_characters_button".localized.uppercased())
+                                .font(.caption)
+                                .foregroundStyle(.secondary)
+                        })
                     }
-                    .font(.caption)
-                    .foregroundStyle(.secondary)
                 }
-            }
             }
             .frame(maxWidth: .infinity, alignment: .leading)
         }
@@ -90,10 +92,10 @@ struct EpisodeDetailsView: View {
     @ViewBuilder
     private func infoRow(title: String, value: String) -> some View {
         VStack(alignment: .leading, spacing: 4) {
-            Text(verbatim: title.uppercased())
+            Text(title.uppercased())
                 .font(.caption)
                 .foregroundStyle(.secondary)
-            Text(verbatim: value)
+            Text(value)
                 .font(.body)
         }
     }

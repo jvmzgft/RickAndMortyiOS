@@ -36,12 +36,12 @@ struct LocationDetailsView: View {
             if let location = viewModel.location {
                 detailsView(location: location)
             } else {
-                Text(verbatim: "No results")
+                Text("generic_no_results")
                     .multilineTextAlignment(.center)
                     .padding()
             }
         case .error:
-            Text(verbatim: "ERROR")
+            Text("generic_error")
                 .multilineTextAlignment(.center)
                 .padding()
         }
@@ -51,23 +51,22 @@ struct LocationDetailsView: View {
         ScrollView {
             VStack(alignment: .leading, spacing: 16) {
                 VStack(alignment: .leading, spacing: 8) {
-                    Text(verbatim: location.name)
+                    Text(location.name)
                         .font(.title)
                         .bold()
-                    Text(verbatim: "\(displayText(location.type)) - \(displayText(location.dimension))")
+                    Text("\(displayText(location.type)) - \(displayText(location.dimension))")
                         .font(.headline)
                         .foregroundStyle(.secondary)
                 }
                 
-                infoRow(title: "Type", value: displayText(location.type))
-                infoRow(title: "Dimension", value: displayText(location.dimension))
+                infoRow(title: "label_type".localized.uppercased(), value: displayText(location.type))
+                infoRow(title: "label_dimension".localized.uppercased(), value: displayText(location.dimension))
                 infoRow(title: "URL", value: location.url)
-                infoRow(title: "Created", value: location.created)
-                infoRow(title: "Residents", value: "\(location.residents.count)")
+                infoRow(title: "label_created".localized.uppercased(), value: location.created)
                 
                 if let location = viewModel.location, !location.residentIds.isEmpty {
                     VStack(alignment: .leading, spacing: 12) {
-                        Text(verbatim: "RESIDENTS")
+                        Text("residents_section_title")
                             .font(.caption)
                             .foregroundStyle(.secondary)
                         FourColumnButtonGrid(items: location.residentIds) { characterId in
@@ -75,7 +74,7 @@ struct LocationDetailsView: View {
                         }
                         HStack {
                             Spacer()
-                            Button("See all characters".uppercased()) {
+                            Button("see_all_characters_button".localized.uppercased()) {
                                 viewModel.handleSeeAllCharacters()
                             }
                             .font(.caption)
@@ -91,7 +90,7 @@ struct LocationDetailsView: View {
     }
 
     private func displayText(_ value: String) -> String {
-        value.isEmpty ? "Unknown" : value
+        value.isEmpty ? "generic_unknown".localized : value
     }
 
     @ViewBuilder

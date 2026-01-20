@@ -20,7 +20,7 @@ struct CharacterListView: View {
         .task {
             await viewModel.loadCharacters()
         }
-        .searchable(text: $viewModel.searchText, prompt: "Search character")
+        .searchable(text: $viewModel.searchText, prompt: "search_character_placeholder".localized)
         .onChange(of: viewModel.searchText) { _, newValue in
             viewModel.updateSearch(newValue)
         }
@@ -34,7 +34,7 @@ struct CharacterListView: View {
         case .ready:
             readyView()
         case .error:
-            Text(verbatim: "ERROR")
+            Text("generic_error")
                 .multilineTextAlignment(.center)
                 .padding()
         }
@@ -43,7 +43,7 @@ struct CharacterListView: View {
     @ViewBuilder
     private func readyView() -> some View {
         if viewModel.characters.isEmpty {
-            Text(verbatim: "No results available")
+            Text("generic_no_results")
                 .foregroundStyle(.secondary)
                 .frame(maxWidth: .infinity, alignment: .center)
         } else {
@@ -58,9 +58,9 @@ struct CharacterListView: View {
                                 .clipShape(RoundedRectangle(cornerRadius: 8, style: .continuous))
                             
                             VStack(alignment: .leading, spacing: 4) {
-                                Text(verbatim: character.name)
+                                Text(character.name)
                                     .font(.headline)
-                                Text(verbatim: "\(character.species)")
+                                Text("\(character.species)")
                                     .font(.subheadline)
                                     .foregroundStyle(.secondary)
                             }

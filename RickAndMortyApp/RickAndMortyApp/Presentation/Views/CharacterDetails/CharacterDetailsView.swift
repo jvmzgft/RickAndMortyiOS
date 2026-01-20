@@ -36,12 +36,12 @@ struct CharacterDetailsView: View {
             if let character = viewModel.character {
                 detailsView(character: character)
             } else {
-                Text(verbatim: "No results")
+                Text("generic_no_results")
                     .multilineTextAlignment(.center)
                     .padding()
             }
         case .error:
-            Text(verbatim: "ERROR")
+            Text("generic_error")
                 .multilineTextAlignment(.center)
                 .padding()
         }
@@ -56,23 +56,23 @@ struct CharacterDetailsView: View {
                 .clipShape(RoundedRectangle(cornerRadius: 16, style: .continuous))
 
                 VStack(alignment: .leading, spacing: 8) {
-                    Text(verbatim: character.name)
+                    Text(character.name)
                         .font(.title)
                         .bold()
-                    Text(verbatim: "\(character.status) - \(character.species)")
+                    Text("\(character.status) - \(character.species)")
                         .font(.headline)
                         .foregroundStyle(.secondary)
                 }
 
-                infoRow(title: "Gender", value: character.gender)
-                infoRow(title: "Type", value: character.type.isEmpty ? "Unknown" : character.type)
-                infoRow(title: "Origin", value: character.origin.name)
-                infoRow(title: "Current location", value: character.location.name)
+                infoRow(title: "label_gender".localized.uppercased(), value: character.gender)
+                infoRow(title: "label_type".localized.uppercased(), value: character.type.isEmpty ? "generic_unknown".localizedCapitalized : character.type)
+                infoRow(title: "label_origin".localized.uppercased(), value: character.origin.name)
+                infoRow(title: "label_current_location".localized.uppercased(), value: character.location.name)
 
                 if let character = viewModel.character {
                     if !character.episodeIds.isEmpty {
                         VStack(alignment: .leading, spacing: 8) {
-                            Text(verbatim: "EPISODES")
+                            Text("episodes_section_title")
                                 .font(.caption)
                                 .foregroundStyle(.secondary)
                             FourColumnButtonGrid(items: character.episodeIds) { episodeId in
@@ -80,18 +80,20 @@ struct CharacterDetailsView: View {
                             }
                             HStack {
                                 Spacer()
-                                Button("See all episodes".uppercased()) {
+                                Button(action: {
                                     viewModel.handleSeeAllEpisodes()
-                                }
-                                .font(.caption)
-                                .foregroundStyle(.secondary)
+                                }, label: {
+                                    Text("see_all_episodes_button".localized.uppercased())
+                                        .font(.caption)
+                                        .foregroundStyle(.secondary)
+                                })
                             }
                         }
                     }
                     
                     if !character.locationIds.isEmpty {
                         VStack(alignment: .leading, spacing: 12) {
-                            Text(verbatim: "LOCATIONS")
+                            Text("locations_section_title")
                                 .font(.caption)
                                 .foregroundStyle(.secondary)
                             FourColumnButtonGrid(items: character.locationIds) { locationId in
@@ -99,11 +101,13 @@ struct CharacterDetailsView: View {
                             }
                             HStack {
                                 Spacer()
-                                Button("See all locations".uppercased()) {
+                                Button(action: {
                                     viewModel.handleSeeAllLocations()
-                                }
-                                .font(.caption)
-                                .foregroundStyle(.secondary)
+                                }, label: {
+                                    Text("see_all_locations_button".localized.uppercased())
+                                        .font(.caption)
+                                        .foregroundStyle(.secondary)
+                                })
                             }
                         }
                     }
@@ -116,7 +120,7 @@ struct CharacterDetailsView: View {
     @ViewBuilder
     private func infoRow(title: String, value: String) -> some View {
         VStack(alignment: .leading, spacing: 4) {
-            Text(title.uppercased())
+            Text(title)
                 .font(.caption)
                 .foregroundStyle(.secondary)
             Text(value)
