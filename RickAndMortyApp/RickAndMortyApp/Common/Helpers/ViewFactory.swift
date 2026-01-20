@@ -25,4 +25,16 @@ struct ViewFactory {
             DependencyInjector.locationDetail(location: location, id: id, coordinator: coordinator)
         }
     }
+    
+    @ToolbarContentBuilder
+    static func closeTabItemButton(action: @escaping () -> Void) -> some ToolbarContent {
+        ToolbarItem(placement: .topBarTrailing) {
+            Button {
+                action()
+            } label: {
+                Image(systemName: "xmark")
+                    .frame(width: 48, height: 48)
+            }
+        }
+    }
 }

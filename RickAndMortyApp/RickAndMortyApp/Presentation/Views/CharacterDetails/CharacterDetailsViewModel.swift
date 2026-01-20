@@ -54,11 +54,11 @@ class CharacterDetailsViewModel: ViewModel<NavigatingProtocol>, ViewStateUpdatab
     }
 
     func handleEpisodeTap(_ episodeId: String) {
-        getCoordinator()?.navigateToDetail(.episodeDetail(nil, id: episodeId))
+        getCoordinator()?.navigateTo(.episodeDetail(nil, id: episodeId))
     }
 
     func handleLocationTap(_ locationId: String) {
-        getCoordinator()?.navigateToDetail(.locationDetail(nil, id: locationId))
+        getCoordinator()?.navigateTo(.locationDetail(nil, id: locationId))
     }
 
     func handleSeeAllEpisodes() {
@@ -67,5 +67,9 @@ class CharacterDetailsViewModel: ViewModel<NavigatingProtocol>, ViewStateUpdatab
 
     func handleSeeAllLocations() {
         getCoordinator()?.handleDeeplink(destination: .locations)
+    }
+    
+    func clearPath() {
+        getCoordinator()?.clearPath()
     }
 }

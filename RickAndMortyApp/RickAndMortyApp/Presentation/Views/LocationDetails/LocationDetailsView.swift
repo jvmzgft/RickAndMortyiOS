@@ -19,9 +19,12 @@ struct LocationDetailsView: View {
             .task {
                 await viewModel.loadLocationIfNeeded()
             }
-            .navigationTitle("Location detail")
+            .navigationTitle("location_detail_title")
             .navigationBarTitleDisplayMode(.inline)
             .toolbar(.hidden, for: .tabBar)
+            .toolbar {
+                ViewFactory.closeTabItemButton(action: viewModel.clearPath)
+            }
     }
 
     @ViewBuilder
@@ -55,13 +58,13 @@ struct LocationDetailsView: View {
                         .font(.headline)
                         .foregroundStyle(.secondary)
                 }
-
+                
                 infoRow(title: "Type", value: displayText(location.type))
                 infoRow(title: "Dimension", value: displayText(location.dimension))
                 infoRow(title: "URL", value: location.url)
                 infoRow(title: "Created", value: location.created)
                 infoRow(title: "Residents", value: "\(location.residents.count)")
-
+                
                 if let location = viewModel.location, !location.residentIds.isEmpty {
                     VStack(alignment: .leading, spacing: 12) {
                         Text("RESIDENTS")
@@ -72,13 +75,13 @@ struct LocationDetailsView: View {
                         }
                         HStack {
                             Spacer()
-                        Button("See all characters".uppercased()) {
-                            viewModel.handleSeeAllCharacters()
+                            Button("See all characters".uppercased()) {
+                                viewModel.handleSeeAllCharacters()
+                            }
+                            .font(.caption)
+                            .foregroundStyle(.secondary)
                         }
-                        .font(.caption)
-                        .foregroundStyle(.secondary)
                     }
-                }
                 }
             }
             .frame(maxWidth: .infinity, alignment: .leading)

@@ -9,17 +9,18 @@ import Foundation
 
 protocol NavigatingProtocol: AnyObject {
     var path: AppPath { get set }
-    func navigateToDetail(_ spec: AppViewSpec)
+    func navigateTo(_ spec: AppViewSpec)
     func handleDeeplink(destination: NavigationDestionation)
+    func clearPath()
 }
 
 extension NavigatingProtocol {
-    func navigateToDetail(_ spec: AppViewSpec) {
-        switch spec {
-        case .characterDetail, .episodeDetail, .locationDetail:
-            path.push(spec)
-        default: break
-        }
+    func navigateTo(_ spec: AppViewSpec) {
+        path.push(spec)
+    }
+    
+    func clearPath() {
+        path.popToRoot()
     }
 }
 

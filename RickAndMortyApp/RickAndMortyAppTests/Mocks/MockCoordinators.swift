@@ -28,7 +28,7 @@ final class MockCharacterCoordinator: Coordinator, CharacterCoordinatorProtocol 
         navigatedLocationId = id
     }
 
-    func navigateToDetail(_ spec: AppViewSpec) {
+    func navigateTo(_ spec: AppViewSpec) {
         lastDetailSpec = spec
     }
 
@@ -48,7 +48,7 @@ final class MockEpisodesCoordinator: Coordinator, EpisodesCoordinatorProtocol {
         navigatedEpisode = episode
     }
 
-    func navigateToDetail(_ spec: AppViewSpec) {
+    func navigateTo(_ spec: AppViewSpec) {
         lastDetailSpec = spec
     }
 
@@ -67,7 +67,7 @@ final class MockLocationsCoordinator: Coordinator, LocationsCoordinatorProtocol 
         navigatedLocation = location
     }
 
-    func navigateToDetail(_ spec: AppViewSpec) {
+    func navigateTo(_ spec: AppViewSpec) {
         lastDetailSpec = spec
     }
 

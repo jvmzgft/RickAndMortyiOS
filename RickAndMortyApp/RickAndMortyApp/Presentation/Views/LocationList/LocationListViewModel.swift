@@ -56,6 +56,6 @@ class LocationListViewModel: ViewModel<NavigatingProtocol>, ViewStateUpdatable {
     }
 
     func selectLocation(_ location: Location) {
-        getCoordinator()?.navigateToDetail(.locationDetail(location, id: nil))
+        getCoordinator()?.navigateTo(.locationDetail(location, id: nil))
     }
 }

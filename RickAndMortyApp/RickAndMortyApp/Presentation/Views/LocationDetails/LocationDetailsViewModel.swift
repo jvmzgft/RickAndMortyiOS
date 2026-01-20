@@ -54,10 +54,14 @@ class LocationDetailsViewModel: ViewModel<NavigatingProtocol>, ViewStateUpdatabl
     }
 
     func handleResidentTap(_ characterId: String) {
-        getCoordinator()?.navigateToDetail(.characterDetail(nil, id: characterId))
+        getCoordinator()?.navigateTo(.characterDetail(nil, id: characterId))
     }
 
     func handleSeeAllCharacters() {
         getCoordinator()?.handleDeeplink(destination: .characters)
+    }
+    
+    func clearPath() {
+        getCoordinator()?.clearPath()
     }
 }

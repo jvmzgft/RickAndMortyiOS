@@ -19,9 +19,12 @@ struct EpisodeDetailsView: View {
             .task {
                 await viewModel.loadEpisodeIfNeeded()
             }
-            .navigationTitle("Episode detail")
+            .navigationTitle("episode_detail_title")
             .navigationBarTitleDisplayMode(.inline)
             .toolbar(.hidden, for: .tabBar)
+            .toolbar {
+                ViewFactory.closeTabItemButton(action: viewModel.clearPath)
+            }
     }
 
     @ViewBuilder

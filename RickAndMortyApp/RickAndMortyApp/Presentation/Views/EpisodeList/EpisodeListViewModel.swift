@@ -56,6 +56,6 @@ class EpisodeListViewModel: ViewModel<NavigatingProtocol>, ViewStateUpdatable {
     }
 
     func selectEpisode(_ episode: Episode) {
-        getCoordinator()?.navigateToDetail(.episodeDetail(episode, id: nil))
+        getCoordinator()?.navigateTo(.episodeDetail(episode, id: nil))
     }
 }

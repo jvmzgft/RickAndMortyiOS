@@ -39,7 +39,7 @@ class CharacterListViewModel: ViewModel<NavigatingProtocol>, ViewStateUpdatable 
     }
 
     func selectCharacter(_ character: Character) {
-        getCoordinator()?.navigateToDetail(.characterDetail(character, id: nil))
+        getCoordinator()?.navigateTo(.characterDetail(character, id: nil))
     }
 
     func updateSearch(_ text: String) {

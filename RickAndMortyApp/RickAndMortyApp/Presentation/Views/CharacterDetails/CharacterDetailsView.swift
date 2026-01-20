@@ -19,9 +19,12 @@ struct CharacterDetailsView: View {
             .task {
                 await viewModel.loadCharacterIfNeeded()
             }
-            .navigationTitle("Character Detail")
+            .navigationTitle("character_detail_title")
             .navigationBarTitleDisplayMode(.inline)
             .toolbar(.hidden, for: .tabBar)
+            .toolbar {
+                ViewFactory.closeTabItemButton(action: viewModel.clearPath)
+            }
     }
 
     @ViewBuilder
