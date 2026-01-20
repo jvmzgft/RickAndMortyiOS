@@ -24,15 +24,11 @@ extension NavigatingProtocol {
     }
 }
 
-open class Coordinator {
-    weak var parentCoordinator: Coordinator?
-}
-
-open class NavigatingCoordinator: Coordinator, NavigatingProtocol {
+open class NavigatingCoordinator: NavigatingProtocol {
     var path: AppPath = AppPath()
+    weak var parentCoordinator: NavigatingCoordinator?
 
-    init(parentCoordinator: Coordinator? = nil) {
-        super.init()
+    init(parentCoordinator: NavigatingCoordinator? = nil) {
         self.parentCoordinator = parentCoordinator
     }
 

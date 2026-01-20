@@ -16,7 +16,7 @@ class EpisodeDetailsViewModel: ViewModel<NavigatingProtocol>, ViewStateUpdatable
     private let apiClient: APIClient?
     private let episodeId: String?
     
-    init(episode: Episode, coordinator: Coordinator) {
+    init(episode: Episode, coordinator: NavigatingCoordinator) {
         self.episode = episode
         self.episodeId = nil
         self.apiClient = nil
@@ -24,7 +24,11 @@ class EpisodeDetailsViewModel: ViewModel<NavigatingProtocol>, ViewStateUpdatable
         self.state = .ready
     }
 
-    init(id: String?, coordinator: Coordinator, apiClient: APIClient = DependencyInjector.getURLSessionAPIClient()) {
+    init(
+        id: String?,
+        coordinator: NavigatingCoordinator,
+        apiClient: APIClient = DependencyInjector.getURLSessionAPIClient()
+    ) {
         self.episode = nil
         self.episodeId = id
         self.apiClient = apiClient

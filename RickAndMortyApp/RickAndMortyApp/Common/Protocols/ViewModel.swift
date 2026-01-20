@@ -8,9 +8,9 @@
 import Foundation
 
 internal class ViewModel<ViewModelCoordinator> {
-    private weak var coordinator: Coordinator?
+    private weak var coordinator: NavigatingCoordinator?
     
-    internal init(coordinator: Coordinator) {
+    internal init(coordinator: NavigatingCoordinator) {
         self.coordinator = coordinator
     }
     

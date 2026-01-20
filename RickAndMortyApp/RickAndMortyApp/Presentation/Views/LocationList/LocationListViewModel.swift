@@ -18,7 +18,10 @@ class LocationListViewModel: ViewModel<NavigatingProtocol>, ViewStateUpdatable {
     private var currentPage = 1
     private var hasNextPage = false
 
-    init(coordinator: Coordinator, apiClient: APIClient = DependencyInjector.getURLSessionAPIClient()) {
+    init(
+        coordinator: NavigatingCoordinator,
+        apiClient: APIClient = DependencyInjector.getURLSessionAPIClient()
+    ) {
         self.apiClient = apiClient
         super.init(coordinator: coordinator)
     }

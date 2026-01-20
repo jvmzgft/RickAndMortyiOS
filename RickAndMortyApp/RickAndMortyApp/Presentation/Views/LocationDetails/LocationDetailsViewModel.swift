@@ -16,15 +16,19 @@ class LocationDetailsViewModel: ViewModel<NavigatingProtocol>, ViewStateUpdatabl
     private let apiClient: APIClient?
     private let locationId: String?
 
-    init(location: Location, coordinator: Coordinator) {
+    init(location: Location, coordinator: NavigatingCoordinator) {
         self.location = location
         self.locationId = nil
         self.apiClient = nil
         super.init(coordinator: coordinator)
         self.state = .ready
     }
-
-    init(id: String?, coordinator: Coordinator, apiClient: APIClient = DependencyInjector.getURLSessionAPIClient()) {
+    
+    init(
+        id: String?,
+        coordinator: NavigatingCoordinator,
+        apiClient: APIClient = DependencyInjector.getURLSessionAPIClient()
+    ) {
         self.location = nil
         self.locationId = id
         self.apiClient = apiClient

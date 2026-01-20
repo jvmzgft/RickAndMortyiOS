@@ -16,7 +16,7 @@ class CharacterDetailsViewModel: ViewModel<NavigatingProtocol>, ViewStateUpdatab
     private let apiClient: APIClient?
     private let characterId: String?
 
-    init(character: Character, coordinator: Coordinator) {
+    init(character: Character, coordinator: NavigatingCoordinator) {
         self.character = character
         self.characterId = nil
         self.apiClient = nil
@@ -24,7 +24,11 @@ class CharacterDetailsViewModel: ViewModel<NavigatingProtocol>, ViewStateUpdatab
         self.state = .ready
     }
 
-    init(id: String?, coordinator: Coordinator, apiClient: APIClient = DependencyInjector.getURLSessionAPIClient()) {
+    init(
+        id: String?,
+         coordinator: NavigatingCoordinator,
+         apiClient: APIClient = DependencyInjector.getURLSessionAPIClient()
+    ) {
         self.character = nil
         self.characterId = id
         self.apiClient = apiClient

@@ -12,11 +12,15 @@ internal class DependencyInjector {
         URLSessionAPIClient()
     }
     
-    static func characterListView(coordinator: Coordinator) -> CharacterListView {
+    static func characterListView(coordinator: NavigatingCoordinator) -> CharacterListView {
         .init(viewModel: CharacterListViewModel(coordinator: coordinator))
     }
     
-    static func characterDetailView(character: Character?, id: String?, coordinator: Coordinator) -> CharacterDetailsView {
+    static func characterDetailView(
+        character: Character?,
+        id: String?,
+        coordinator: NavigatingCoordinator
+    ) -> CharacterDetailsView {
         var vm: CharacterDetailsViewModel
         if let character {
             vm = .init(character: character, coordinator: coordinator)
@@ -28,11 +32,15 @@ internal class DependencyInjector {
         return .init(viewModel: vm)
     }
     
-    static func episodeList(coordinator: Coordinator) -> EpisodeListView {
+    static func episodeList(coordinator: NavigatingCoordinator) -> EpisodeListView {
         .init(viewModel: .init(coordinator: coordinator))
     }
     
-    static func episodeDetail(episode: Episode?, id: String?, coordinator: Coordinator) -> EpisodeDetailsView {
+    static func episodeDetail(
+        episode: Episode?,
+        id: String?,
+        coordinator: NavigatingCoordinator
+    ) -> EpisodeDetailsView {
         var vm: EpisodeDetailsViewModel
         if let episode {
             vm = .init(episode: episode, coordinator: coordinator)
@@ -44,11 +52,15 @@ internal class DependencyInjector {
         return .init(viewModel: vm)
     }
     
-    static func locationList(coordinator: Coordinator) -> LocationListView {
+    static func locationList(coordinator: NavigatingCoordinator) -> LocationListView {
         .init(viewModel: .init(coordinator: coordinator))
     }
     
-    static func locationDetail(location: Location?, id: String?, coordinator: Coordinator) -> LocationDetailsView {
+    static func locationDetail(
+        location: Location?,
+        id: String?,
+        coordinator: NavigatingCoordinator
+    ) -> LocationDetailsView {
         var vm: LocationDetailsViewModel
         if let location {
             vm = .init(location: location, coordinator: coordinator)

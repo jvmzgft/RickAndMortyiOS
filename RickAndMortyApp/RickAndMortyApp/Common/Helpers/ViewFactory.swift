@@ -9,7 +9,7 @@ import SwiftUI
 
 struct ViewFactory {
     @ViewBuilder
-    static func makeView(for spec: AppViewSpec, coordinator: Coordinator) -> some View {
+    static func makeView(for spec: AppViewSpec, coordinator: NavigatingCoordinator) -> some View {
         switch spec {
         case .characterList:
             DependencyInjector.characterListView(coordinator: coordinator)

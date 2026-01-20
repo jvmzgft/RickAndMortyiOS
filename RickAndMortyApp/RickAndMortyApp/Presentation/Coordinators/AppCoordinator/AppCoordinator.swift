@@ -12,7 +12,7 @@ protocol AppCoordinatorProtocol: AnyObject {
 }
 
 @Observable
-class AppCoordinator: Coordinator, AppCoordinatorProtocol {
+class AppCoordinator: NavigatingCoordinator, AppCoordinatorProtocol {
     enum AppCoordinatorScreen {
         case splash
         case tabView

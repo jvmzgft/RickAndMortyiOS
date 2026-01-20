@@ -21,7 +21,10 @@ class CharacterListViewModel: ViewModel<NavigatingProtocol>, ViewStateUpdatable 
     private var currentQuery: String?
     private var searchTask: Task<Void, Never>?
 
-    init(coordinator: Coordinator, apiClient: APIClient = DependencyInjector.getURLSessionAPIClient()) {
+    init(
+        coordinator: NavigatingCoordinator,
+        apiClient: APIClient = DependencyInjector.getURLSessionAPIClient()
+    ) {
         self.apiClient = apiClient
         super.init(coordinator: coordinator)
     }

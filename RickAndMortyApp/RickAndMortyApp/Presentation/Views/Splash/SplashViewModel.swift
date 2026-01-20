@@ -12,7 +12,7 @@ import Observation
 class SplashViewModel: ViewModel<AppCoordinatorProtocol> {
     let splashLottie: String
     
-    init(splashLottie: String, coordinator: Coordinator) {
+    init(splashLottie: String, coordinator: NavigatingCoordinator) {
         self.splashLottie = splashLottie
         super.init(coordinator: coordinator)
     }
