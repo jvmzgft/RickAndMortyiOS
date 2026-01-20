@@ -18,21 +18,20 @@ protocol TabBarCoordinatorProtocol: AnyObject {
 }
 
 @Observable
-class TabBarCoordinator: NavigatingCoordinator, TabBarCoordinatorProtocol {
+class TabBarCoordinator: Coordinator, TabBarCoordinatorProtocol {
     var selectedTab: TabItems = .characters
     var characterCoordinator: CharacterCoordinator?
     var episodesCoordinator: EpisodesCoordinator?
     var locationsCoordinator: LocationsCoordinator?
     
-    init(parentCoordinator: NavigatingCoordinator) {
-        super.init()
-        self.parentCoordinator = parentCoordinator
+    init(parentCoordinator: Coordinator) {
+        super.init(parentCoordinator: parentCoordinator)
         self.characterCoordinator = CharacterCoordinator(parentCoordinator: self)
         self.episodesCoordinator = EpisodesCoordinator(parentCoordinator: self)
         self.locationsCoordinator = LocationsCoordinator(parentCoordinator: self)
     }
     
-    override func handleDeeplink(destination: NavigationDestionation) {
+    func handleDeeplink(destination: NavigationDestionation) {
         switch destination {
         case .characters:
             selectedTab = .characters

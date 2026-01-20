@@ -73,7 +73,8 @@ final class MockLocationsCoordinator: NavigatingCoordinator {
     }
 }
 
-final class MockAppCoordinator: NavigatingCoordinator, AppCoordinatorProtocol {
+@MainActor
+final class MockAppCoordinator: Coordinator, AppCoordinatorProtocol {
     private(set) var didNavigateToTabBar = false
 
     func navigateToTabBar() {
