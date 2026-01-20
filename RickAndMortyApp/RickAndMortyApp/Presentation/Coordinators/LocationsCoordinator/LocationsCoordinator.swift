@@ -8,15 +8,9 @@
 import SwiftUI
 
 @Observable
-class LocationsCoordinator: Coordinator, NavigatingProtocol {
-    var path: AppPath = AppPath()
+class LocationsCoordinator: NavigatingCoordinator {
 
-    init(parentCoordinator: Coordinator? = nil) {
-        super.init()
-        self.parentCoordinator = parentCoordinator
-    }
-    
-    func handleDeeplink(destination: NavigationDestionation) {
+    override func handleDeeplink(destination: NavigationDestionation) {
         switch destination {
         case .locations:
             path.popToRoot()

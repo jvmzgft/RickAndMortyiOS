@@ -27,3 +27,16 @@ extension NavigatingProtocol {
 open class Coordinator {
     weak var parentCoordinator: Coordinator?
 }
+
+open class NavigatingCoordinator: Coordinator, NavigatingProtocol {
+    var path: AppPath = AppPath()
+
+    init(parentCoordinator: Coordinator? = nil) {
+        super.init()
+        self.parentCoordinator = parentCoordinator
+    }
+
+    func handleDeeplink(destination: NavigationDestionation) {
+        print("Override handleDeeplink in a subclass.")
+    }
+}

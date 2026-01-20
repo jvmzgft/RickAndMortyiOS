@@ -8,15 +8,9 @@
 import SwiftUI
 
 @Observable
-class CharacterCoordinator: Coordinator, NavigatingProtocol {
-    var path: AppPath = AppPath()
-
-    init(parentCoordinator: Coordinator? = nil) {
-        super.init()
-        self.parentCoordinator = parentCoordinator
-    }
+class CharacterCoordinator: NavigatingCoordinator {
     
-    func handleDeeplink(destination: NavigationDestionation) {
+    override func handleDeeplink(destination: NavigationDestionation) {
         switch destination {
         case .characters:
             path.popToRoot()
