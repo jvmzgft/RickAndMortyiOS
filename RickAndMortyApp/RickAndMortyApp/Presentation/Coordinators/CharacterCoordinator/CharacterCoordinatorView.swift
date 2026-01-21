@@ -22,6 +22,7 @@ struct CharacterCoordinatorView: View {
                 .navigationDestination(for: AppViewSpec.self) { spec in
                     ViewFactory.makeView(for: spec, coordinator: coordinator)
                 }
+                .navigationTitle(TabItems.characters.title)
         }
     }
 }

@@ -12,8 +12,13 @@ internal class DependencyInjector {
         URLSessionAPIClient()
     }
     
-    static func characterListView(coordinator: NavigatingCoordinator) -> CharacterListView {
-        .init(viewModel: CharacterListViewModel(coordinator: coordinator))
+    static func characterListView(
+        coordinator: NavigatingCoordinator,
+        viewModel: CharacterListViewModel? = nil
+    ) -> CharacterListView {
+        .init(
+            viewModel: viewModel ?? CharacterListViewModel(coordinator: coordinator)
+        )
     }
     
     static func characterDetailView(

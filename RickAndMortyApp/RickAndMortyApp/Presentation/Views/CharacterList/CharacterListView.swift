@@ -17,13 +17,9 @@ struct CharacterListView: View {
     var body: some View {
         @Bindable var viewModel = viewModel
         contentView()
-        .task {
-            await viewModel.loadCharacters()
-        }
-        .searchable(text: $viewModel.searchText, prompt: "search_character_placeholder".localized)
-        .onChange(of: viewModel.searchText) { _, newValue in
-            viewModel.updateSearch(newValue)
-        }
+            .task {
+                await viewModel.loadCharacters()
+            }
     }
     
     @ViewBuilder

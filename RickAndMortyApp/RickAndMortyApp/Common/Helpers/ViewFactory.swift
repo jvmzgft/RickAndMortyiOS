@@ -12,7 +12,14 @@ struct ViewFactory {
     static func makeView(for spec: AppViewSpec, coordinator: NavigatingCoordinator) -> some View {
         switch spec {
         case .characterList:
-            DependencyInjector.characterListView(coordinator: coordinator)
+            if let characterCoordinator = coordinator as? CharacterCoordinator {
+                DependencyInjector.characterListView(
+                    coordinator: characterCoordinator,
+                    viewModel: characterCoordinator.listViewModel
+                )
+            } else {
+                DependencyInjector.characterListView(coordinator: coordinator)
+            }
         case let .characterDetail(character, id):
             DependencyInjector.characterDetailView(character: character, id: id, coordinator: coordinator)
         case .episodeList:

@@ -9,6 +9,12 @@ import SwiftUI
 
 @Observable
 class CharacterCoordinator: NavigatingCoordinator {
+    var listViewModel: CharacterListViewModel?
+    
+    init(parentCoordinator: Coordinator) {
+        super.init(parentCoordinator: parentCoordinator)
+        listViewModel = CharacterListViewModel(coordinator: self)
+    }
     
     override func handleDeeplink(destination: NavigationDestionation) {
         switch destination {

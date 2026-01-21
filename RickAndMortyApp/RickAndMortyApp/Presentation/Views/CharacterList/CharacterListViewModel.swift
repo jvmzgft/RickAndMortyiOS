@@ -82,11 +82,11 @@ class CharacterListViewModel: ViewModel<NavigatingProtocol>, ViewStateUpdatable 
             if reset {
                 characters = []
                 hasNextPage = false
-                if query == nil {
-                    await updateViewState(.error)
-                } else {
-                    await updateViewState(.ready)
+                if Task.isCancelled {
+                    isLoadingNextPage = false
+                    return
                 }
+                await updateViewState(.error)
             } else {
                 hasNextPage = false
             }

@@ -11,6 +11,7 @@ enum TabItems: Hashable {
     case characters
     case locations
     case episodes
+    case search
     
     var title: String {
         switch self {
@@ -20,6 +21,8 @@ enum TabItems: Hashable {
             "tab_locations_title".localized
         case .episodes:
             "tab_episodes_title".localized
+        case .search:
+            "Search"
         }
     }
     
@@ -31,6 +34,8 @@ enum TabItems: Hashable {
             "mountain.2.fill"
         case .episodes:
             "play.square.stack.fill"
+        case .search:
+            "magnifyingglass"
         }
     }
 }

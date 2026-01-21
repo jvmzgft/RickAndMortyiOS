@@ -340,6 +340,22 @@
         }
       }
     },
+    "search_not_available" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Search not available"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Búsqueda no disponible"
+          }
+        }
+      }
+    },
     "see_all_characters_button" : {
       "extractionState" : "manual",
       "localizations" : {

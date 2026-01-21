@@ -15,7 +15,7 @@ struct TabBarCoordinatorView: View {
     }
     
     var body: some View {
-        TabView(selection: $coordinator.selectedTab) {
+        let tabView = TabView(selection: $coordinator.selectedTab) {
             Tab(TabItems.characters.title, systemImage: TabItems.characters.systemImage, value: TabItems.characters) {
                 if let characterCoordinator = coordinator.characterCoordinator {
                     CharacterCoordinatorView(coordinator: characterCoordinator)
@@ -31,6 +31,44 @@ struct TabBarCoordinatorView: View {
                     LocationsCoordinatorView(coordinator: locationsCoordinator)
                 }
             }
+            Tab(TabItems.search.title, systemImage: TabItems.search.systemImage, value: TabItems.search, role: .search) {
+                NavigationStack {
+                    if let characterCoordinator = coordinator.characterCoordinator {
+                        DependencyInjector.characterListView(
+                            coordinator: characterCoordinator,
+                            viewModel: characterCoordinator.listViewModel
+                        )
+                    } else {
+                        VStack {
+                            Image(systemName: "magnifyingglass")
+                            Text("search_not_available")
+                        }
+                        .frame(maxWidth: .infinity, maxHeight: .infinity)
+                        .background(Color.orange)
+                    }
+                }
+            }
         }
+
+        if coordinator.selectedTab == .search {
+            tabView
+                .searchable(text: searchTextBinding, prompt: Text("search_character_placeholder".localized))
+        } else {
+            tabView
+        }
+    }
+
+    private var searchTextBinding: Binding<String> {
+        guard let listViewModel = coordinator.characterCoordinator?.listViewModel else {
+            return .constant("")
+        }
+
+        return Binding(
+            get: { listViewModel.searchText },
+            set: { newValue in
+                listViewModel.searchText = newValue
+                listViewModel.updateSearch(newValue)
+            }
+        )
     }
 }
