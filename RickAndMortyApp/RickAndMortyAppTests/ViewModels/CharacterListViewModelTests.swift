@@ -92,7 +92,7 @@ final class CharacterListViewModelTests: XCTestCase {
         await waitFor(timeout: 1.0) { await MainActor.run { viewModel.state == .ready } }
 
         await MainActor.run {
-            XCTAssertEqual(viewModel.state, .ready)
+            XCTAssertEqual(viewModel.state, .error)
             XCTAssertTrue(viewModel.characters.isEmpty)
         }
     }

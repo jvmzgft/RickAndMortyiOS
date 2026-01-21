@@ -8,6 +8,7 @@
 import Foundation
 @testable import RickAndMortyApp
 
+@MainActor
 final class MockCharacterCoordinator: NavigatingCoordinator {
     private(set) var navigatedCharacter: Character?
     private(set) var navigatedEpisodeId: String?
