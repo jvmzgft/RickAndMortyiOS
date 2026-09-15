@@ -9,7 +9,7 @@ import Foundation
 
 struct CharacterListResponse: Decodable {
     let info: PageInfo
-    let results: [Character]
+    let results: [CharacterModel]
 }
 
 struct PageInfo: Decodable {
@@ -19,7 +19,7 @@ struct PageInfo: Decodable {
     let prev: String?
 }
 
-struct Character: Decodable, Identifiable, Hashable {
+struct CharacterModel: Decodable, Identifiable, Hashable {
     let id: Int
     let name: String
     let status: String
@@ -34,14 +34,20 @@ struct Character: Decodable, Identifiable, Hashable {
     let created: String
 }
 
-extension Character {
+extension CharacterModel {
     var episodeIds: [String] {
-        episode.compactMap { $0.asLastPathComponent() }
+        episode.compactMap {
+            URL(string: $0)?.lastPathComponent
+        }
     }
-    
+
     var locationIds: [String] {
-        let urls = [origin.url, location.url].compactMap { $0 }
-        let ids = urls.compactMap { $0.asLastPathComponent() }
+        let urls = [origin.url, location.url]
+
+        let ids = urls.compactMap {
+            URL(string: $0)?.lastPathComponent
+        }
+
         return Array(Set(ids)).sorted()
     }
 }

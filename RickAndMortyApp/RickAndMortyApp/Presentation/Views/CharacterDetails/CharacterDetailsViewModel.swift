@@ -11,12 +11,12 @@ import Observation
 @Observable
 class CharacterDetailsViewModel: ViewModel<NavigatingProtocol>, ViewStateUpdatable {
     var state: ViewState = .loading
-    private(set) var character: Character?
+    private(set) var character: CharacterModel?
 
     private let apiClient: APIClient?
     private let characterId: String?
 
-    init(character: Character, coordinator: NavigatingCoordinator) {
+    init(character: CharacterModel, coordinator: NavigatingCoordinator) {
         self.character = character
         self.characterId = nil
         self.apiClient = nil
@@ -49,7 +49,7 @@ class CharacterDetailsViewModel: ViewModel<NavigatingProtocol>, ViewStateUpdatab
         }
 
         do {
-            let response: Character = try await apiClient.send(RickAndMortyAPI.character(id: characterId))
+            let response: CharacterModel = try await apiClient.send(RickAndMortyAPI.character(id: characterId))
             character = response
             await updateViewState(.ready)
         } catch {

@@ -71,8 +71,8 @@ final class CharacterDetailsViewModelTests: XCTestCase {
     }
 }
 
-private func makeCharacterWithEpisodesAndLocations() -> Character {
-    Character(
+private func makeCharacterWithEpisodesAndLocations() -> CharacterModel {
+    CharacterModel(
         id: 99,
         name: "Test Character",
         status: "Alive",

@@ -22,7 +22,7 @@ internal class DependencyInjector {
     }
     
     static func characterDetailView(
-        character: Character?,
+        character: CharacterModel?,
         id: String?,
         coordinator: NavigatingCoordinator
     ) -> CharacterDetailsView {

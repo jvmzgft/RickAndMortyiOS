@@ -10,13 +10,13 @@ import Foundation
 
 @MainActor
 final class MockCharacterCoordinator: NavigatingCoordinator {
-    private(set) var navigatedCharacter: Character?
+    private(set) var navigatedCharacter: CharacterModel?
     private(set) var navigatedEpisodeId: String?
     private(set) var navigatedLocationId: String?
     private(set) var lastDeeplink: NavigationDestionation?
     private(set) var lastDetailSpec: AppViewSpec?
 
-    func navigateToDetail(character: Character) {
+    func navigateToDetail(character: CharacterModel) {
         navigatedCharacter = character
     }
 

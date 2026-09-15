@@ -8,8 +8,8 @@
 import Foundation
 @testable import RickAndMortyApp
 
-func makeCharacter(id: Int) -> Character {
-    Character(
+func makeCharacter(id: Int) -> CharacterModel {
+    CharacterModel(
         id: id,
         name: "Character \(id)",
         status: "Alive",

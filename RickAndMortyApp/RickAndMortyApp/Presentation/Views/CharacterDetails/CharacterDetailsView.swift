@@ -47,7 +47,7 @@ struct CharacterDetailsView: View {
         }
     }
 
-    private func detailsView(character: Character) -> some View {
+    private func detailsView(character: CharacterModel) -> some View {
         ScrollView {
             VStack(alignment: .leading, spacing: 16) {
                 CachedAsyncImage(urlString: character.image)

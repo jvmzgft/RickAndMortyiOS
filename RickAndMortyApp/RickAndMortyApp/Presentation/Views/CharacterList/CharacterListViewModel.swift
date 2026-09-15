@@ -13,7 +13,7 @@ class CharacterListViewModel: ViewModel<NavigatingProtocol>, ViewStateUpdatable 
     
     var state: ViewState = .loading
     var searchText = ""
-    private(set) var characters: [Character] = []
+    private(set) var characters: [CharacterModel] = []
     private(set) var isLoadingNextPage = false
     private let apiClient: APIClient
     private var currentPage = 1
@@ -33,7 +33,7 @@ class CharacterListViewModel: ViewModel<NavigatingProtocol>, ViewStateUpdatable 
         await fetchCharacters(reset: true, query: nil)
     }
 
-    func loadNextPageIfNeeded(currentItem: Character) async {
+    func loadNextPageIfNeeded(currentItem: CharacterModel) async {
         guard state == .ready else { return }
         guard hasNextPage, !isLoadingNextPage else { return }
         guard currentItem.id == characters.last?.id else { return }
@@ -41,7 +41,7 @@ class CharacterListViewModel: ViewModel<NavigatingProtocol>, ViewStateUpdatable 
         await fetchCharacters(reset: false, query: currentQuery)
     }
 
-    func selectCharacter(_ character: Character) {
+    func selectCharacter(_ character: CharacterModel) {
         getCoordinator()?.navigateTo(.characterDetail(character, id: nil))
     }
 

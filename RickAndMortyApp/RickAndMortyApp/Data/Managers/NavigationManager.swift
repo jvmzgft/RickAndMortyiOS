@@ -12,7 +12,7 @@ protocol ViewSpec: Hashable {}
 
 enum AppViewSpec: ViewSpec {
     case characterList
-    case characterDetail(Character?, id: String?)
+    case characterDetail(CharacterModel?, id: String?)
     case episodeList
     case episodeDetail(Episode?, id: String?)
     case locationList
