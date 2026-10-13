@@ -26,8 +26,11 @@
       }
     },
     {
-      "enabled" : false,
-      "parallelizable" : true,
+      "enabled" : true,
+      "parallelizable" : false,
+      "selectedTests" : [
+        "RickAndMortyAppUITests/testNavigationSmoke()"
+      ],
       "target" : {
         "containerPath" : "container:RickAndMortyApp.xcodeproj",
         "identifier" : "17CC95BD2F14D4CB0072FE1A",

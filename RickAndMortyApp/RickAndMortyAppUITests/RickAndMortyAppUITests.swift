@@ -23,12 +23,35 @@ final class RickAndMortyAppUITests: XCTestCase {
     }
 
     @MainActor
-    func testExample() throws {
-        // UI tests must launch the application that they test.
+    func testNavigationSmoke() throws {
         let app = XCUIApplication()
+        app.launchArguments = ["-AppleLanguages", "(en)", "-AppleLocale", "en_US"]
         app.launch()
 
-        // Use XCTAssert and related functions to verify your tests produce the correct results.
+        let charactersTab = app.tabBars.buttons["Characters"]
+        XCTAssertTrue(charactersTab.waitForExistence(timeout: 30))
+        XCTAssertTrue(app.navigationBars["Characters"].exists)
+
+        let character = app.buttons.matching(
+            NSPredicate(format: "label BEGINSWITH %@", "Rick Sanchez")
+        ).firstMatch
+        XCTAssertTrue(character.waitForExistence(timeout: 30))
+        character.tap()
+
+        let detail = app.navigationBars["Character detail"]
+        XCTAssertTrue(detail.waitForExistence(timeout: 10))
+        XCTAssertTrue(app.staticTexts["Rick Sanchez"].exists)
+        detail.buttons.firstMatch.tap()
+        XCTAssertTrue(app.navigationBars["Characters"].waitForExistence(timeout: 10))
+
+        app.tabBars.buttons["Episodes"].tap()
+        XCTAssertTrue(app.navigationBars["Episodes"].waitForExistence(timeout: 10))
+
+        app.tabBars.buttons["Locations"].tap()
+        XCTAssertTrue(app.navigationBars["Locations"].waitForExistence(timeout: 10))
+
+        app.tabBars.buttons["Search"].tap()
+        XCTAssertTrue(app.searchFields.firstMatch.waitForExistence(timeout: 10))
     }
 
     @MainActor
