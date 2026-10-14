@@ -11,15 +11,15 @@ import XCTest
 @MainActor
 final class CharacterListViewModelTests: XCTestCase {
     func testLoadCharactersSuccess() async {
-        let mock = MockAPIClient()
+        let mock = MockHttpRepository()
         let response = CharacterListResponse(
             info: PageInfo(count: 2, pages: 1, next: nil, prev: nil),
             results: [makeCharacter(id: 1), makeCharacter(id: 2)]
         )
-        mock.enqueue(.success(response))
+        mock.charactersResults.append(.success(response))
 
         let coordinator = MockCharacterCoordinator()
-        let viewModel = CharacterListViewModel(coordinator: coordinator, apiClient: mock)
+        let viewModel = CharacterListViewModel(coordinator: coordinator, useCase: GetCharacterListUseCase(repository: mock))
 
         await viewModel.loadCharacters()
 
@@ -27,12 +27,11 @@ final class CharacterListViewModelTests: XCTestCase {
             XCTAssertEqual(viewModel.state, .ready)
             XCTAssertEqual(viewModel.characters.count, 2)
         }
-        XCTAssertEqual(mock.requests.count, 1)
-        XCTAssertTrue(mock.requests[0].queryItems.contains(URLQueryItem(name: "page", value: "1")))
+        XCTAssertEqual(mock.operations, [.fetchCharacters(page: 1, name: nil)])
     }
 
     func testPaginationAppendsResults() async {
-        let mock = MockAPIClient()
+        let mock = MockHttpRepository()
         let page1 = CharacterListResponse(
             info: PageInfo(count: 3, pages: 2, next: "next", prev: nil),
             results: [makeCharacter(id: 1), makeCharacter(id: 2)]
@@ -41,11 +40,10 @@ final class CharacterListViewModelTests: XCTestCase {
             info: PageInfo(count: 3, pages: 2, next: nil, prev: "prev"),
             results: [makeCharacter(id: 3)]
         )
-        mock.enqueue(.success(page1))
-        mock.enqueue(.success(page2))
+        mock.charactersResults = [.success(page1), .success(page2)]
 
         let coordinator = MockCharacterCoordinator()
-        let viewModel = CharacterListViewModel(coordinator: coordinator, apiClient: mock)
+        let viewModel = CharacterListViewModel(coordinator: coordinator, useCase: GetCharacterListUseCase(repository: mock))
 
         await viewModel.loadCharacters()
         if let last = viewModel.characters.last {
@@ -56,19 +54,22 @@ final class CharacterListViewModelTests: XCTestCase {
             XCTAssertEqual(viewModel.characters.count, 3)
             XCTAssertFalse(viewModel.isLoadingNextPage)
         }
-        XCTAssertEqual(mock.requests.count, 2)
+        XCTAssertEqual(mock.operations, [
+            .fetchCharacters(page: 1, name: nil),
+            .fetchCharacters(page: 2, name: nil)
+        ])
     }
 
     func testSearchUsesAPIAndUpdatesResults() async {
-        let mock = MockAPIClient()
+        let mock = MockHttpRepository()
         let response = CharacterListResponse(
             info: PageInfo(count: 1, pages: 1, next: nil, prev: nil),
             results: [makeCharacter(id: 42)]
         )
-        mock.enqueue(.success(response))
+        mock.charactersResults.append(.success(response))
 
         let coordinator = MockCharacterCoordinator()
-        let viewModel = CharacterListViewModel(coordinator: coordinator, apiClient: mock)
+        let viewModel = CharacterListViewModel(coordinator: coordinator, useCase: GetCharacterListUseCase(repository: mock))
 
         viewModel.updateSearch("rick")
         await waitFor(timeout: 1.0) { await MainActor.run { viewModel.state == .ready } }
@@ -78,15 +79,15 @@ final class CharacterListViewModelTests: XCTestCase {
             XCTAssertEqual(viewModel.state, .ready)
             XCTAssertEqual(viewModel.characters.count, 1)
         }
-        XCTAssertTrue(mock.requests.last?.queryItems.contains(URLQueryItem(name: "name", value: "rick")) == true)
+        XCTAssertEqual(mock.operations, [.fetchCharacters(page: 1, name: "rick")])
     }
 
     func testSearch404ClearsResults() async {
-        let mock = MockAPIClient()
-        mock.enqueue(NetworkError.statusCode(404))
+        let mock = MockHttpRepository()
+        mock.charactersResults.append(.failure(NetworkError.statusCode(404)))
 
         let coordinator = MockCharacterCoordinator()
-        let viewModel = CharacterListViewModel(coordinator: coordinator, apiClient: mock)
+        let viewModel = CharacterListViewModel(coordinator: coordinator, useCase: GetCharacterListUseCase(repository: mock))
 
         viewModel.updateSearch("unknown")
         await waitFor(timeout: 1.0) { await MainActor.run { viewModel.state == .ready } }
@@ -95,12 +96,13 @@ final class CharacterListViewModelTests: XCTestCase {
             XCTAssertEqual(viewModel.state, .error)
             XCTAssertTrue(viewModel.characters.isEmpty)
         }
+        XCTAssertEqual(mock.operations, [.fetchCharacters(page: 1, name: "unknown")])
     }
 
     func testSelectCharacterNotifiesCoordinator() async {
-        let mock = MockAPIClient()
+        let mock = MockHttpRepository()
         let coordinator = MockCharacterCoordinator()
-        let viewModel = CharacterListViewModel(coordinator: coordinator, apiClient: mock)
+        let viewModel = CharacterListViewModel(coordinator: coordinator, useCase: GetCharacterListUseCase(repository: mock))
         let character = makeCharacter(id: 10)
 
         viewModel.selectCharacter(character)
@@ -108,6 +110,7 @@ final class CharacterListViewModelTests: XCTestCase {
         await MainActor.run {
             XCTAssertEqual(coordinator.lastDetailSpec, .characterDetail(character, id: nil))
         }
+        XCTAssertTrue(mock.operations.isEmpty)
     }
 }
 

@@ -22,11 +22,15 @@ Se utiliza **MVVM + Coordinator**, organizado en presentación, datos y componen
 | **MVVM** | Las vistas presentan contenido; los ViewModels gestionan carga, búsqueda y paginación. |
 | **Coordinator** | Centraliza las decisiones de navegación y los flujos de cada sección. |
 | **Navegación tipada** | `NavigationManager` encapsula `NavigationPath` y los destinos de `NavigationStack`. |
-| **Inyección de dependencias y Factory** | `DependencyInjector` construye vistas y ViewModels; los contratos permiten sustituir clientes y coordinadores en tests. |
+| **Inyección de dependencias y Factory** | `DependencyInjector` compone vistas, ViewModels, casos de uso y el repositorio; cada factoría de caso de uso acepta un repositorio sustituible. |
 | **Estado observable** | `@Observable` y `ViewState` representan carga, contenido y error; las transiciones de estado se gestionan en `@MainActor`. |
-| **Cliente de red por protocolo** | `APIClient` separa los ViewModels de `URLSession`; las peticiones usan `async/await` y modelos `Decodable`. |
+| **Casos de uso por operación** | Cada ViewModel recibe un `Get...UseCase` concreto como `struct`. Todos implementan un único protocolo `UseCase` con `Input`, `Output` y `handle(_:)`, e inyectan `HttpRepository`. |
+| **Repositorio por protocolo** | `HttpRepository` expone seis operaciones tipadas de listado y detalle; `DefaultHttpRepository` selecciona los endpoints y delega en `APIClient`. |
+| **Cliente de red por protocolo** | `APIClient` abstrae `URLSession`; las peticiones usan `async/await` y modelos `Decodable`. |
 
-La inyección es manual, sin un contenedor externo. Los ViewModels consumen directamente `APIClient`: no se añade una capa de repositorios o casos de uso para este alcance. El cliente centraliza la construcción de peticiones, la validación HTTP y la decodificación de respuestas.
+La inyección es manual, sin un contenedor externo. El flujo de datos es `ViewModel → UseCase → HttpRepository → APIClient → URLSession`. Los seis casos de uso limitan cada ViewModel a su operación de listado o detalle; actualmente delegan en el repositorio sin añadir reglas de negocio. Los ViewModels conservan el estado, el debounce y la decisión de cargar otra página, sin conocer el repositorio ni los endpoints. Se mantienen los modelos de respuesta de la API, sin mapeos adicionales. El cliente centraliza la construcción de peticiones, la validación HTTP y la decodificación de respuestas.
+
+El contrato común exige `func handle(_ input: Input) async throws -> Output`. Los detalles usan `String` como entrada, los listados de episodios y localizaciones usan `Int`, y el listado de personajes define un `Input` con página y nombre opcional. Cada caso declara su `Output`; no hay protocolos específicos, implementaciones `DefaultGet...` ni dependencias `any UseCase` en los ViewModels. El repositorio sigue siendo sustituible mediante su protocolo.
 
 Los coordinadores se organizan en raíz (`AppCoordinator`), pestañas (`TabBarCoordinator`) y flujos por entidad. Los ViewModels mantienen una referencia débil a su coordinador.
 
@@ -36,7 +40,8 @@ Los coordinadores se organizan en raíz (`AppCoordinator`), pestañas (`TabBarCo
 RickAndMortyApp/
 ├── Application/       # Entrada de la app y Quick Actions
 ├── Common/            # Componentes, protocolos y utilidades compartidas
-├── Data/              # Modelos, cliente de red y NavigationManager
+├── Data/              # Modelos, repositorio, cliente de red y NavigationManager
+├── Domain/            # Protocolo UseCase y seis casos concretos
 ├── Presentation/      # Coordinadores, vistas, ViewModels e inyección
 └── Resources/         # Localización, assets y animaciones
 
@@ -61,10 +66,12 @@ No requiere clave de API ni configuración de un backend. Sí necesita conexión
 
 ## Pruebas
 
-- **Unitarias:** peticiones y endpoints, estados de vista y ViewModels. Utilizan mocks para comprobar carga, paginación, búsqueda y delegación de navegación sin acceder a la API real.
+- **Unitarias:** peticiones, endpoints, repositorio, casos de uso, composición de dependencias y ViewModels. Los ViewModels se prueban junto a su caso de uso real sobre `MockHttpRepository`; los casos de uso se prueban también de forma directa y a través del contrato genérico común. El repositorio usa `MockAPIClient`, sin acceder a la API real. Las nuevas suites usan Swift Testing; los tests existentes conservan XCTest.
 - **UI:** `testNavigationSmoke` comprueba el paso del splash al catálogo, la apertura del detalle de Rick Sanchez, el regreso al listado y el acceso a episodios, localizaciones y búsqueda.
 
-**Resultado de navegación:** 1 test ejecutado y 0 fallos en iPhone 17 con iOS 27.0, usando Xcode 27.0 (13/10/2026). Esta prueba consulta la API real; no cubre todos los recorridos entre entidades ni verifica los resultados de búsqueda. La suite unitaria no se ha ejecutado en esta revisión.
+**Resultado unitario:** 64 tests aprobados y 0 fallos en iPhone 18 Pro con iOS 27.0, usando Xcode 27.0 (14/10/2026), incluidos 16 tests de casos de uso, 6 de composición y 8 del repositorio.
+
+**Resultado de navegación:** 1 test ejecutado y 0 fallos en iPhone 17 con iOS 27.0, usando Xcode 27.0 (13/10/2026). Esta prueba consulta la API real; no cubre todos los recorridos entre entidades ni verifica los resultados de búsqueda. No se ha repetido tras incorporar el repositorio y los casos de uso.
 
 Desde Xcode, ejecuta el plan de pruebas con `Cmd + U`. Para repetir solo el recorrido de navegación desde la raíz del repositorio:
 

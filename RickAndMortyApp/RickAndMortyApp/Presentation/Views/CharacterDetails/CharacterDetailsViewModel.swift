@@ -13,25 +13,25 @@ class CharacterDetailsViewModel: ViewModel<NavigatingProtocol>, ViewStateUpdatab
     var state: ViewState = .loading
     private(set) var character: CharacterModel?
 
-    private let apiClient: APIClient?
+    private let useCase: GetCharacterDetailUseCase?
     private let characterId: String?
 
     init(character: CharacterModel, coordinator: NavigatingCoordinator) {
         self.character = character
         self.characterId = nil
-        self.apiClient = nil
+        self.useCase = nil
         super.init(coordinator: coordinator)
         self.state = .ready
     }
 
     init(
         id: String?,
-         coordinator: NavigatingCoordinator,
-         apiClient: APIClient = DependencyInjector.getURLSessionAPIClient()
+        coordinator: NavigatingCoordinator,
+        useCase: GetCharacterDetailUseCase = DependencyInjector.getCharacterDetailUseCase()
     ) {
         self.character = nil
         self.characterId = id
-        self.apiClient = apiClient
+        self.useCase = useCase
         super.init(coordinator: coordinator)
     }
 
@@ -43,13 +43,13 @@ class CharacterDetailsViewModel: ViewModel<NavigatingProtocol>, ViewStateUpdatab
 
         await updateViewState(.loading)
 
-        guard let apiClient, let characterId else {
+        guard let useCase, let characterId else {
             await updateViewState(.error)
             return
         }
 
         do {
-            let response: CharacterModel = try await apiClient.send(RickAndMortyAPI.character(id: characterId))
+            let response = try await useCase.handle(characterId)
             character = response
             await updateViewState(.ready)
         } catch {

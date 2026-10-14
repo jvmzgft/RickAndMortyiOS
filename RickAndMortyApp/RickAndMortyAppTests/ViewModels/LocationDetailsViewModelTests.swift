@@ -21,11 +21,11 @@ final class LocationDetailsViewModelTests: XCTestCase {
     }
 
     func testLoadLocationByIdSuccess() async {
-        let mock = MockAPIClient()
+        let mock = MockHttpRepository()
         let location = makeLocation(id: 9)
-        mock.enqueue(.success(location))
+        mock.locationResults.append(.success(location))
         let coordinator = MockLocationsCoordinator()
-        let viewModel = LocationDetailsViewModel(id: "9", coordinator: coordinator, apiClient: mock)
+        let viewModel = LocationDetailsViewModel(id: "9", coordinator: coordinator, useCase: GetLocationDetailUseCase(repository: mock))
 
         await viewModel.loadLocationIfNeeded()
 
@@ -33,23 +33,38 @@ final class LocationDetailsViewModelTests: XCTestCase {
             XCTAssertEqual(viewModel.state, .ready)
             XCTAssertEqual(viewModel.location?.id, 9)
         }
+        XCTAssertEqual(mock.operations, [.fetchLocation(id: "9")])
     }
 
     func testHandleResidentTapNavigates() async {
+        let mock = MockHttpRepository()
         let coordinator = MockLocationsCoordinator()
-        let viewModel = LocationDetailsViewModel(location: makeLocation(id: 1), coordinator: coordinator)
+        let viewModel = LocationDetailsViewModel(id: "1", coordinator: coordinator, useCase: GetLocationDetailUseCase(repository: mock))
+        let loadedCoordinator = MockLocationsCoordinator()
+        let loadedViewModel = LocationDetailsViewModel(location: makeLocation(id: 1), coordinator: loadedCoordinator)
+
+        loadedViewModel.handleResidentTap("12")
+        XCTAssertEqual(loadedCoordinator.lastDetailSpec, .characterDetail(nil, id: "12"))
 
         viewModel.handleResidentTap("12")
 
         XCTAssertEqual(coordinator.lastDetailSpec, .characterDetail(nil, id: "12"))
+        XCTAssertTrue(mock.operations.isEmpty)
     }
 
     func testHandleSeeAllCharactersDeeplink() async {
+        let mock = MockHttpRepository()
         let coordinator = MockLocationsCoordinator()
-        let viewModel = LocationDetailsViewModel(location: makeLocation(id: 1), coordinator: coordinator)
+        let viewModel = LocationDetailsViewModel(id: "1", coordinator: coordinator, useCase: GetLocationDetailUseCase(repository: mock))
+        let loadedCoordinator = MockLocationsCoordinator()
+        let loadedViewModel = LocationDetailsViewModel(location: makeLocation(id: 1), coordinator: loadedCoordinator)
+
+        loadedViewModel.handleSeeAllCharacters()
+        XCTAssertEqual(loadedCoordinator.lastDeeplink, .characters)
 
         viewModel.handleSeeAllCharacters()
 
         XCTAssertEqual(coordinator.lastDeeplink, .characters)
+        XCTAssertTrue(mock.operations.isEmpty)
     }
 }

@@ -15,7 +15,7 @@ class CharacterListViewModel: ViewModel<NavigatingProtocol>, ViewStateUpdatable 
     var searchText = ""
     private(set) var characters: [CharacterModel] = []
     private(set) var isLoadingNextPage = false
-    private let apiClient: APIClient
+    private let useCase: GetCharacterListUseCase
     private var currentPage = 1
     private var hasNextPage = true
     private var currentQuery: String?
@@ -23,9 +23,9 @@ class CharacterListViewModel: ViewModel<NavigatingProtocol>, ViewStateUpdatable 
 
     init(
         coordinator: NavigatingCoordinator,
-        apiClient: APIClient = DependencyInjector.getURLSessionAPIClient()
+        useCase: GetCharacterListUseCase = DependencyInjector.getCharacterListUseCase()
     ) {
-        self.apiClient = apiClient
+        self.useCase = useCase
         super.init(coordinator: coordinator)
     }
 
@@ -68,9 +68,7 @@ class CharacterListViewModel: ViewModel<NavigatingProtocol>, ViewStateUpdatable 
         }
 
         do {
-            let response: CharacterListResponse = try await apiClient.send(
-                RickAndMortyAPI.characterList(page: currentPage, name: query)
-            )
+            let response = try await useCase.handle(.init(page: currentPage, name: query))
             if reset {
                 characters = response.results
             } else {

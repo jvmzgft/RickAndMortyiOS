@@ -11,15 +11,15 @@ import XCTest
 @MainActor
 final class LocationListViewModelTests: XCTestCase {
     func testLoadLocationsSuccess() async {
-        let mock = MockAPIClient()
+        let mock = MockHttpRepository()
         let response = LocationListResponse(
             info: PageInfo(count: 1, pages: 1, next: nil, prev: nil),
             results: [makeLocation(id: 1)]
         )
-        mock.enqueue(.success(response))
+        mock.locationsResults.append(.success(response))
 
         let coordinator = MockLocationsCoordinator()
-        let viewModel = LocationListViewModel(coordinator: coordinator, apiClient: mock)
+        let viewModel = LocationListViewModel(coordinator: coordinator, useCase: GetLocationListUseCase(repository: mock))
 
         await viewModel.loadLocations()
 
@@ -27,10 +27,11 @@ final class LocationListViewModelTests: XCTestCase {
             XCTAssertEqual(viewModel.state, .ready)
             XCTAssertEqual(viewModel.locations.count, 1)
         }
+        XCTAssertEqual(mock.operations, [.fetchLocations(page: 1)])
     }
 
     func testPaginationAppendsLocations() async {
-        let mock = MockAPIClient()
+        let mock = MockHttpRepository()
         let page1 = LocationListResponse(
             info: PageInfo(count: 2, pages: 2, next: "next", prev: nil),
             results: [makeLocation(id: 1)]
@@ -39,11 +40,10 @@ final class LocationListViewModelTests: XCTestCase {
             info: PageInfo(count: 2, pages: 2, next: nil, prev: "prev"),
             results: [makeLocation(id: 2)]
         )
-        mock.enqueue(.success(page1))
-        mock.enqueue(.success(page2))
+        mock.locationsResults = [.success(page1), .success(page2)]
 
         let coordinator = MockLocationsCoordinator()
-        let viewModel = LocationListViewModel(coordinator: coordinator, apiClient: mock)
+        let viewModel = LocationListViewModel(coordinator: coordinator, useCase: GetLocationListUseCase(repository: mock))
 
         await viewModel.loadLocations()
         if let last = viewModel.locations.last {
@@ -54,13 +54,13 @@ final class LocationListViewModelTests: XCTestCase {
             XCTAssertEqual(viewModel.locations.count, 2)
             XCTAssertFalse(viewModel.isLoadingNextPage)
         }
-        XCTAssertEqual(mock.requests.count, 2)
+        XCTAssertEqual(mock.operations, [.fetchLocations(page: 1), .fetchLocations(page: 2)])
     }
 
     func testSelectLocationNotifiesCoordinator() async {
-        let mock = MockAPIClient()
+        let mock = MockHttpRepository()
         let coordinator = MockLocationsCoordinator()
-        let viewModel = LocationListViewModel(coordinator: coordinator, apiClient: mock)
+        let viewModel = LocationListViewModel(coordinator: coordinator, useCase: GetLocationListUseCase(repository: mock))
         let location = makeLocation(id: 10)
 
         viewModel.selectLocation(location)
@@ -68,5 +68,6 @@ final class LocationListViewModelTests: XCTestCase {
         await MainActor.run {
             XCTAssertEqual(coordinator.lastDetailSpec, .locationDetail(location, id: nil))
         }
+        XCTAssertTrue(mock.operations.isEmpty)
     }
 }

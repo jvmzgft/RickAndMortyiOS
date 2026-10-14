@@ -40,7 +40,6 @@ struct ViewFactory {
                 action()
             } label: {
                 Image(systemName: "xmark")
-                    .frame(width: 48, height: 48)
             }
         }
     }

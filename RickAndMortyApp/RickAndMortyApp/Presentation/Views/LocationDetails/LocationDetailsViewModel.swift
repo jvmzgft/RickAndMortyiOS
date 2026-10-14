@@ -13,13 +13,13 @@ class LocationDetailsViewModel: ViewModel<NavigatingProtocol>, ViewStateUpdatabl
     var state: ViewState = .loading
     private(set) var location: Location?
 
-    private let apiClient: APIClient?
+    private let useCase: GetLocationDetailUseCase?
     private let locationId: String?
 
     init(location: Location, coordinator: NavigatingCoordinator) {
         self.location = location
         self.locationId = nil
-        self.apiClient = nil
+        self.useCase = nil
         super.init(coordinator: coordinator)
         self.state = .ready
     }
@@ -27,11 +27,11 @@ class LocationDetailsViewModel: ViewModel<NavigatingProtocol>, ViewStateUpdatabl
     init(
         id: String?,
         coordinator: NavigatingCoordinator,
-        apiClient: APIClient = DependencyInjector.getURLSessionAPIClient()
+        useCase: GetLocationDetailUseCase = DependencyInjector.getLocationDetailUseCase()
     ) {
         self.location = nil
         self.locationId = id
-        self.apiClient = apiClient
+        self.useCase = useCase
         super.init(coordinator: coordinator)
     }
 
@@ -43,13 +43,13 @@ class LocationDetailsViewModel: ViewModel<NavigatingProtocol>, ViewStateUpdatabl
 
         await updateViewState(.loading)
 
-        guard let apiClient, let locationId else {
+        guard let useCase, let locationId else {
             await updateViewState(.error)
             return
         }
 
         do {
-            let response: Location = try await apiClient.send(RickAndMortyAPI.location(id: locationId))
+            let response = try await useCase.handle(locationId)
             location = response
             await updateViewState(.ready)
         } catch {

@@ -13,13 +13,13 @@ class EpisodeDetailsViewModel: ViewModel<NavigatingProtocol>, ViewStateUpdatable
     var state: ViewState = .loading
     private(set) var episode: Episode?
 
-    private let apiClient: APIClient?
+    private let useCase: GetEpisodeDetailUseCase?
     private let episodeId: String?
     
     init(episode: Episode, coordinator: NavigatingCoordinator) {
         self.episode = episode
         self.episodeId = nil
-        self.apiClient = nil
+        self.useCase = nil
         super.init(coordinator: coordinator)
         self.state = .ready
     }
@@ -27,11 +27,11 @@ class EpisodeDetailsViewModel: ViewModel<NavigatingProtocol>, ViewStateUpdatable
     init(
         id: String?,
         coordinator: NavigatingCoordinator,
-        apiClient: APIClient = DependencyInjector.getURLSessionAPIClient()
+        useCase: GetEpisodeDetailUseCase = DependencyInjector.getEpisodeDetailUseCase()
     ) {
         self.episode = nil
         self.episodeId = id
-        self.apiClient = apiClient
+        self.useCase = useCase
         super.init(coordinator: coordinator)
     }
 
@@ -43,13 +43,13 @@ class EpisodeDetailsViewModel: ViewModel<NavigatingProtocol>, ViewStateUpdatable
 
         await updateViewState(.loading)
 
-        guard let apiClient else {
+        guard let useCase else {
             await updateViewState(.error)
             return
         }
 
         do {
-            let response: Episode = try await apiClient.send(RickAndMortyAPI.episode(id: episodeId))
+            let response = try await useCase.handle(episodeId)
             episode = response
             await updateViewState(.ready)
         } catch {

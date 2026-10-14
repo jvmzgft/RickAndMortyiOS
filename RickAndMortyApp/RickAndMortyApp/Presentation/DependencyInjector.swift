@@ -11,6 +11,46 @@ internal class DependencyInjector {
     static func getURLSessionAPIClient() -> URLSessionAPIClient {
         URLSessionAPIClient()
     }
+
+    static func getHttpRepository() -> any HttpRepository {
+        DefaultHttpRepository(apiClient: getURLSessionAPIClient())
+    }
+
+    static func getCharacterListUseCase(
+        repository: any HttpRepository = getHttpRepository()
+    ) -> GetCharacterListUseCase {
+        GetCharacterListUseCase(repository: repository)
+    }
+
+    static func getCharacterDetailUseCase(
+        repository: any HttpRepository = getHttpRepository()
+    ) -> GetCharacterDetailUseCase {
+        GetCharacterDetailUseCase(repository: repository)
+    }
+
+    static func getEpisodeListUseCase(
+        repository: any HttpRepository = getHttpRepository()
+    ) -> GetEpisodeListUseCase {
+        GetEpisodeListUseCase(repository: repository)
+    }
+
+    static func getEpisodeDetailUseCase(
+        repository: any HttpRepository = getHttpRepository()
+    ) -> GetEpisodeDetailUseCase {
+        GetEpisodeDetailUseCase(repository: repository)
+    }
+
+    static func getLocationListUseCase(
+        repository: any HttpRepository = getHttpRepository()
+    ) -> GetLocationListUseCase {
+        GetLocationListUseCase(repository: repository)
+    }
+
+    static func getLocationDetailUseCase(
+        repository: any HttpRepository = getHttpRepository()
+    ) -> GetLocationDetailUseCase {
+        GetLocationDetailUseCase(repository: repository)
+    }
     
     static func characterListView(
         coordinator: NavigatingCoordinator,

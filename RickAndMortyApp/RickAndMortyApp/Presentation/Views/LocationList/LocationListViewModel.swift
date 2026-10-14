@@ -14,15 +14,15 @@ class LocationListViewModel: ViewModel<NavigatingProtocol>, ViewStateUpdatable {
     private(set) var locations: [Location] = []
     private(set) var isLoadingNextPage = false
 
-    private let apiClient: APIClient
+    private let useCase: GetLocationListUseCase
     private var currentPage = 1
     private var hasNextPage = false
 
     init(
         coordinator: NavigatingCoordinator,
-        apiClient: APIClient = DependencyInjector.getURLSessionAPIClient()
+        useCase: GetLocationListUseCase = DependencyInjector.getLocationListUseCase()
     ) {
-        self.apiClient = apiClient
+        self.useCase = useCase
         super.init(coordinator: coordinator)
     }
 
@@ -30,7 +30,7 @@ class LocationListViewModel: ViewModel<NavigatingProtocol>, ViewStateUpdatable {
         await updateViewState(.loading)
 
         do {
-            let response: LocationListResponse = try await apiClient.send(RickAndMortyAPI.locationList(page: currentPage))
+            let response = try await useCase.handle(currentPage)
             locations = response.results
             hasNextPage = response.info.next != nil
             await updateViewState(.ready)
@@ -48,7 +48,7 @@ class LocationListViewModel: ViewModel<NavigatingProtocol>, ViewStateUpdatable {
         currentPage += 1
 
         do {
-            let response: LocationListResponse = try await apiClient.send(RickAndMortyAPI.locationList(page: currentPage))
+            let response = try await useCase.handle(currentPage)
             locations.append(contentsOf: response.results)
             hasNextPage = response.info.next != nil
         } catch {

@@ -14,15 +14,15 @@ class EpisodeListViewModel: ViewModel<NavigatingProtocol>, ViewStateUpdatable {
     private(set) var episodes: [Episode] = []
     private(set) var isLoadingNextPage = false
 
-    private let apiClient: APIClient
+    private let useCase: GetEpisodeListUseCase
     private var currentPage = 1
     private var hasNextPage = false
     
     init(
         coordinator: NavigatingCoordinator,
-        apiClient: APIClient = DependencyInjector.getURLSessionAPIClient()
+        useCase: GetEpisodeListUseCase = DependencyInjector.getEpisodeListUseCase()
     ) {
-        self.apiClient = apiClient
+        self.useCase = useCase
         super.init(coordinator: coordinator)
     }
 
@@ -30,7 +30,7 @@ class EpisodeListViewModel: ViewModel<NavigatingProtocol>, ViewStateUpdatable {
         await updateViewState(.loading)
 
         do {
-            let response: EpisodeListResponse = try await apiClient.send(RickAndMortyAPI.episodeList(page: currentPage))
+            let response = try await useCase.handle(currentPage)
             episodes = response.results
             hasNextPage = response.info.next != nil
             await updateViewState(.ready)
@@ -48,7 +48,7 @@ class EpisodeListViewModel: ViewModel<NavigatingProtocol>, ViewStateUpdatable {
         currentPage += 1
 
         do {
-            let response: EpisodeListResponse = try await apiClient.send(RickAndMortyAPI.episodeList(page: currentPage))
+            let response = try await useCase.handle(currentPage)
             episodes.append(contentsOf: response.results)
             hasNextPage = response.info.next != nil
         } catch {
